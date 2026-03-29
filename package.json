@@ -1,0 +1,34 @@
+{
+  "name": "Theophilus-portfolio",
+  "version": "1.0.0",
+  "description": "Theophilus - Full Stack Developer Portfolio with PostgreSQL, Node.js, Express, EJS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node database/seed.js"
+  },
+  "keywords": [
+    "portfolio",
+    "developer",
+    "nodejs",
+    "express",
+    "postgresql",
+    "ejs"
+  ],
+  "author": "Theophilus",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "method-override": "^3.0.0",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

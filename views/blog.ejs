@@ -1,0 +1,166 @@
+<!-- Blog Hero -->
+<section class="blog-hero">
+  <div class="blog-hero-inner">
+    <div class="blog-hero-content">
+      <p class="blog-hero-label">Digital Journal</p>
+      <h1 class="blog-hero-title">
+        Blog & <span>Insights</span>
+      </h1>
+      <p class="blog-hero-desc">
+        Technical deep-dives, experiments, and lessons learned from the digital laboratory. Exploring code, systems, and the craft of building software.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Main -->
+<section class="blog-main">
+  <div class="blog-main-inner">
+    <div class="blog-grid">
+      <!-- Blog List -->
+      <div class="blog-list">
+        <% posts.forEach((post, index) => { %>
+          <article class="blog-card <%= post.featured ? 'featured' : '' %>">
+            <div class="blog-card-gradient" style="background: linear-gradient(to bottom right, rgba(<%= Math.floor(Math.random() * 255) %>, <%= Math.floor(Math.random() * 255) %>, <%= Math.floor(Math.random() * 255) %>, 0.2), rgba(<%= Math.floor(Math.random() * 255) %>, <%= Math.floor(Math.random() * 255) %>, <%= Math.floor(Math.random() * 255) %>, 0.2))"></div>
+            <div class="blog-card-content">
+              <div class="blog-card-meta">
+                <span class="blog-card-category"><%= post.category_name || post.category_slug || 'General' %></span>
+                <% if (post.featured) { %>
+                  <span class="blog-card-featured-badge">featured</span>
+                <% } %>
+                <div class="blog-card-date-time">
+                  <span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                      <line x1="16" x2="16" y1="2" y2="6"/>
+                      <line x1="8" x2="8" y1="2" y2="6"/>
+                      <line x1="3" x2="21" y1="10" y2="10"/>
+                    </svg>
+                    <%= new Date(post.published_at || post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                  </span>
+                  <span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <%= post.read_time || '5 min read' %>
+                  </span>
+                </div>
+              </div>
+
+              <h2 class="blog-card-title"><%= post.title %></h2>
+              <p class="blog-card-excerpt"><%= post.excerpt %></p>
+
+              <div class="blog-card-footer">
+                <div class="blog-card-author">
+                  <div class="blog-card-avatar">
+                    <%= post.author_name ? post.author_name.split(' ').map(n => n[0]).join('') : 'EC' %>
+                  </div>
+                  <div class="blog-card-author-info">
+                    <span class="blog-card-author-name"><%= post.author_name || 'Theophilus' %></span>
+                    <span class="blog-card-author-role"><%= post.author_role || 'Software Engineer' %></span>
+                  </div>
+                </div>
+                <a href="/blog/<%= post.slug %>" class="blog-card-read-more">
+                  <span>read article</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
+
+              <% if (post.tags && post.tags.length > 0) { %>
+                <div class="blog-card-tags">
+                  <% post.tags.slice(0, 5).forEach(tag => { %>
+                    <span class="blog-card-tag">#<%= tag %></span>
+                  <% }) %>
+                </div>
+              <% } %>
+            </div>
+            <div class="blog-card-progress"></div>
+          </article>
+        <% }) %>
+      </div>
+
+      <!-- Blog Sidebar -->
+      <aside class="blog-sidebar">
+        <!-- Search -->
+        <div class="sidebar-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input type="search" placeholder="Search articles..." id="searchInput" value="<%= filter?.search || '' %>">
+        </div>
+
+        <!-- Categories -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+              <polyline points="16 7 22 7 22 13"/>
+            </svg>
+            <h3 class="sidebar-section-title">Categories</h3>
+          </div>
+          <div class="categories-list">
+            <a href="/blog" class="category-btn <%= !filter?.category ? 'active' : '' %>">
+              <span>All Posts</span>
+              <span class="category-count"><%= posts.length %></span>
+            </a>
+            <% categories.forEach(cat => { %>
+              <a href="/blog?category=<%= cat.slug %>" class="category-btn <%= filter?.category === cat.slug ? 'active' : '' %>">
+                <span><%= cat.name %></span>
+                <span class="category-count"><%= cat.post_count %></span>
+              </a>
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- Popular Tags -->
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/>
+              <path d="M7 7h.01"/>
+            </svg>
+            <h3 class="sidebar-section-title">Popular Tags</h3>
+          </div>
+          <div class="tags-list">
+            <% allTags.slice(0, 12).forEach(tag => { %>
+              <a href="/blog?tag=<%= tag %>" class="tag-btn">#<%= tag %></a>
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="newsletter-box">
+          <div class="sidebar-section-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            <h3 class="sidebar-section-title">Newsletter</h3>
+          </div>
+          <p class="newsletter-desc">
+            Get notified about new articles and experiments. No spam, unsubscribe anytime.
+          </p>
+          <form class="newsletter-form" id="newsletterForm">
+            <input type="email" placeholder="your@email.com" class="newsletter-input" required>
+            <button type="submit" class="newsletter-btn">Subscribe</button>
+          </form>
+        </div>
+
+        <!-- RSS Feed -->
+        <a href="/rss.xml" class="rss-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 11a9 9 0 0 1 9 9"/>
+            <path d="M4 4a16 16 0 0 1 16 16"/>
+            <circle cx="5" cy="19" r="1"/>
+          </svg>
+          <span>Subscribe via RSS</span>
+        </a>
+      </aside>
+    </div>
+  </div>
+</section>

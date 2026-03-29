@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title || 'Theophilus - Digital Laboratory' %></title>
+  <meta name="description" content="<%= description || 'A digital workshop where code meets curiosity. Experiments, prototypes, and open-source artifacts.' %>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="scanlines">
+  <!-- Cursor Effects -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- Header -->
+   <% if (title === "Dashboard - Theophilus") { %>
+   <!-- display nothing -->
+  <% } else { %>
+    <%- include('partials/header') %>
+  <% } %>
+
+  <!-- Main Content -->
+  <main>
+    <%- body %>
+  </main>
+
+  <!-- Footer -->
+  <% if (title === "Dashboard - Theophilus") { %>
+   <!-- display nothing -->
+  <% } else { %>
+    <%- include('partials/footer') %>
+  <% } %>
+
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

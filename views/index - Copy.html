@@ -1,0 +1,245 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <p class="hero-label animate-fade-in-up">TheoInCode — Where Code Meets Curiosity</p>
+        <h1 class="hero-title animate-fade-in-up stagger-1">
+          Where <span class="gradient-text">code</span> meets <span class="gradient-text">creativity to deploying reality</span>
+        </h1>
+        <p class="hero-description animate-fade-in-up stagger-2">
+          Welcome to my digital workshop — a space for experiments, prototypes, and open-source artifacts. Currently building at ... Here, ideas are forged, tested, and refined. Not a portfolio. A laboratory.
+          <!-- <span class="highlight">Here, ideas are forged, tested, and refined. Not a portfolio. A laboratory.</span> -->
+        </p>
+        <div class="hero-buttons animate-fade-in-up stagger-3">
+          <a href="/projects" class="btn-primary">
+            <span class="btn-text">Explore Projects</span>
+            <span class="btn-arrow">&rarr;</span>
+            <span class="btn-bg"></span>
+          </a>
+          <a href="/blog" class="btn-secondary">
+            <span>Read the Blog</span>
+            <span class="btn-arrow">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual animate-fade-in-up stagger-2">
+        <div class="terminal-card">
+          <div class="terminal-dots">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+          </div>
+          <div class="terminal-title">Theophilus@lab:~</div>
+          <div class="terminal-content">
+            <span class="terminal-mobile">$ npm run innovate
+&gt; Building the future...
+&gt; Done in [0.42s]
+
+$ echo "Hello, World!"
+Hello, World!</span>
+            <span class="terminal-desktop">$ npm run innovate
+&gt; Theophilus-lab@1.0.0 innovate
+&gt; node scripts/innovate.js
+
+:>  Initializing experiment -> Compiling ideas...
+:>  Rendering creativity -> Deploying to reality...
+
+Done in [0.42s]
+
+$ echo "I'm Theophilus, welcome to my portfolio!"
+I'm Theophilus, welcome to my portfolio!</span>
+          </div>
+          <div class="floating-badge version">
+            <div class="status-indicator">
+              <span class="pulse-dot"></span>
+              <span>v2.0.0</span>
+            </div>
+          </div>
+          <div class="floating-badge date">
+            <span>Last updated: <%= new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></span>
+          </div>
+        </div>
+        <div class="hero-glow"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Scroll to explore</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="section-label animate-fade-in-up">Artifacts</p>
+        <h2 class="section-title animate-fade-in-up stagger-1">Featured Projects</h2>
+        <p class="section-description animate-fade-in-up stagger-2">
+          A collection of tools, experiments, and contributions to the open source community.
+        </p>
+      </div>
+      <div class="filters animate-fade-in-up stagger-3">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="featured">Featured</button>
+        <button class="filter-btn" data-filter="shipped">Shipped</button>
+        <button class="filter-btn" data-filter="archived">Archived</button>
+      </div>
+    </div>
+
+    <div class="projects-grid">
+      <% featuredProjects.forEach((project, index) => { %>
+        <article class="project-card <%= project.highlight ? 'highlight' : '' %> <%= project.featured ? 'featured' : '' %> animate-fade-in-up" style="animation-delay: <%= (index + 1) * 0.1 %>s">
+          <% if (project.featured) { %>
+            <div class="featured-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              <span>Featured</span>
+            </div>
+          <% } %>
+
+          <div class="project-status">
+            <span class="status-dot <%= project.status === 'shipped' ? 'shipped' : project.status === 'in-progress' ? 'in-progress' : 'archived' %>"></span>
+            <span><%= project.status === 'in-progress' ? 'In Progress' : project.status.charAt(0).toUpperCase() + project.status.slice(1) %></span>
+          </div>
+
+          <p class="project-year"><%= project.year %></p>
+          <h3 class="project-title"><%= project.title %></h3>
+          <p class="project-description"><%= project.description %></p>
+
+          <div class="project-stats">
+            <span class="stat stars">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              <%= project.stars %>
+            </span>
+            <span class="stat forks">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="18" r="3"/>
+                <circle cx="6" cy="6" r="3"/>
+                <circle cx="18" cy="6" r="3"/>
+                <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/>
+                <path d="M12 15V9"/>
+              </svg>
+              <%= project.forks %>
+            </span>
+          </div>
+
+          <div class="project-tags">
+            <% project.tags.slice(0, 4).forEach(tag => { %>
+              <span class="project-tag"><%= tag %></span>
+            <% }) %>
+          </div>
+
+          <div class="project-links">
+            <% if (project.github_url) { %>
+              <a href="<%= project.github_url %>" target="_blank" rel="noopener noreferrer" class="project-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                <span>Source</span>
+              </a>
+            <% } %>
+            <% if (project.live_url) { %>
+              <a href="<%= project.live_url %>" target="_blank" rel="noopener noreferrer" class="project-link live">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                <span>Live Demo</span>
+              </a>
+            <% } %>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+
+    <div class="section-cta animate-fade-in-up">
+      <a href="/projects" class="btn-secondary">
+        <span>View All Projects</span>
+        <span class="btn-arrow">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Lab Notes Section -->
+<section class="lab-notes" id="notes">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="section-label animate-fade-in-up">Field Notes</p>
+        <h2 class="section-title animate-fade-in-up stagger-1">Lab Notes</h2>
+        <p class="section-description animate-fade-in-up stagger-2">
+          Quick observations, experiments, and discoveries from the digital laboratory.
+        </p>
+      </div>
+    </div>
+
+    <div class="notes-grid">
+      <% labNotes.forEach((note, index) => { %>
+        <article class="note-card animate-fade-in-up" style="animation-delay: <%= (index + 1) * 0.1 %>s">
+          <div class="gradient-overlay"></div>
+          <div class="content">
+            <div class="note-header">
+              <span class="note-category"><%= note.icon %></span>
+              <span class="note-date"><%= new Date(note.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) %></span>
+            </div>
+            <h3 class="note-title"><%= note.title %></h3>
+            <p class="note-excerpt"><%= note.description %></p>
+            <div class="note-read-more">
+              <span>Read more</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- Workbench Section -->
+<section class="workbench" id="workbench">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="section-label animate-fade-in-up">Current Focus</p>
+        <h2 class="section-title animate-fade-in-up stagger-1">Workbench</h2>
+        <p class="section-description animate-fade-in-up stagger-2">What's currently on the workbench — active projects, experiments in progress, and things being built.</p>
+      </div>
+    </div>
+
+    <div class="workbench-terminal animate-fade-in-up stagger-2">
+      <div class="terminal-dots">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+      </div>
+      <div class="terminal-title">workbench.status</div>
+      <div class="workbench-content">
+        <% workbenchItems.forEach((item) => { %>
+          <div class="workbench-item">
+            <div class="workbench-item-header">
+              <span class="workbench-item-name"><%= item.title %></span>
+              <span class="workbench-item-progress"><%= item.progress %>%</span>
+            </div>
+            <div class="workbench-progress-bar">
+              <div class="workbench-progress-fill" style="width: <%= item.progress %>"></div>
+            </div>
+            <p class="workbench-item-desc"><%= item.description %></p>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
