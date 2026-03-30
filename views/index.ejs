@@ -5,8 +5,8 @@
       <div class="hero-content">
         <p class="hero-label animate-fade-in-up">TheoInCode — Where Code Meets Curiosity</p>
         <h1 class="hero-title">
-          Architecting<br>
-          <span class="gradient-text typing-cursor" id="typingText">solutions that ship <br> </span>
+          Theo Thobejane:<br>
+          <span class="gradient-text typing-cursor" id="typingText">AI/Software developer. <br> </span>
         </h1>
         <p class="hero-description animate-fade-in-up stagger-2">
           Full-stack developer & AI engineer with a passion for building tools, experiments, and open-source projects.
@@ -26,32 +26,25 @@
       </div>
 
       <div class="hero-visual animate-fade-in-up stagger-2">
-        <div class="terminal-card">
+        <div class="terminal-card" id="heroTerminal">
           <div class="terminal-dots">
-            <span class="terminal-dot red"></span>
-            <span class="terminal-dot yellow"></span>
-            <span class="terminal-dot green"></span>
+            <span class="terminal-dot red" title="Close"></span>
+            <span class="terminal-dot yellow" title="Minimize"></span>
+            <span class="terminal-dot green" title="Maximize"></span>
           </div>
-          <div class="terminal-title">theophilus@lab:~</div>
-          <div class="terminal-content">
-            <span class="terminal-mobile">$ npm run ship
-> Building Axiora AI...
-> 94% relevance accuracy ✓
-> Deployed to production [0.42s]
-
-$ status --production
-4 apps shipped | 14 months</span>
-            <span class="terminal-desktop">$ npm run ship
-> node scripts/deploy.js --production
-
-[1/3]  Axiora AI        -> <b>RAG chatbot</b> (94% accuracy)
-[2/3]  Happy Deliveries -> Real-time <b>geospatial platform</b>
-[3/3]  JobTrack         -> AI application tracker
-
-✓ All systems operational
-✓ Last deploy: 0.42s ago
-
-$ echo "I build, therefore I ship."</span>
+          <div class="terminal-title">
+            <img src="/images/folder.png" alt="" width="12px"> 
+            theophilus@lab — zsh — 80×24
+          </div>
+          <div class="terminal-content" id="terminalContent">
+            <div class="terminal-output" id="terminalOutput"></div>
+            <div class="terminal-input-line">
+              <span class="terminal-prompt">
+                <span class="prompt-user">theophilus</span><span class="prompt-at">@</span><span class="prompt-host">TheoInCodeLand</span> <span class="prompt-path">~</span> <span class="prompt-symbol">%</span>
+              </span>
+              <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="type 'help'..." />
+              <span class="terminal-cursor">▋</span>
+            </div>
           </div>
           <div class="floating-badge version">
             <div class="status-indicator">
@@ -71,6 +64,79 @@ $ echo "I build, therefore I ship."</span>
   <div class="scroll-indicator">
     <span>Scroll to explore</span>
     <div class="line"></div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="section-label animate-fade-in-up">The Journey</p>
+        <h2 class="section-title animate-fade-in-up stagger-1">From Java to AI</h2>
+        <p class="section-description animate-fade-in-up stagger-2">
+          Not your typical path. Started with academic Java, pivoted to full-stack JavaScript, 
+          then dove deep into AI/ML. Built 4 production apps in 14 months while teaching others.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card animate-fade-in-up stagger-2">
+        <div class="about-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3>The Academic Foundation</h3>
+        <p>Advanced Diploma in ICT from University of Mpumalanga. Taught Python and Java to 50+ students, 
+        improving test scores by 21%. Learned that teaching forces you to truly understand what you thought you knew.</p>
+      </div>
+
+      <div class="about-card animate-fade-in-up stagger-3">
+        <div class="about-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <h3>The Self-Taught Pivot</h3>
+        <p>While peers stopped at tutorials, I shipped production apps. Self-taught Node.js, PostgreSQL, 
+        React Native, then AI/ML. Built Axiora AI—a RAG chatbot platform processing 500+ page websites in under 3 minutes.</p>
+      </div>
+
+      <div class="about-card animate-fade-in-up stagger-4">
+        <div class="about-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+        </div>
+        <h3>The Full-Stack Reality</h3>
+        <p>From geospatial delivery platforms with PostGIS to AI booking ecosystems with LLMs. 
+        IBM-certified in Agile/Scrum. Obsessive cross-disciplinary learner who translates complex business needs into maintainable code.</p>
+      </div>
+    </div>
+
+    <div class="about-terminal animate-fade-in-up stagger-5">
+      <div class="terminal-dots">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+      </div>
+      <div class="terminal-title">philosophy.md</div>
+      <div class="about-terminal-content">
+        <p><span class="terminal-comment">// My approach to software engineering</span></p>
+        <p><span class="terminal-keyword">const</span> <span class="terminal-variable">philosophy</span> = {</p>
+        <p class="terminal-indent">buildForScale: <span class="terminal-boolean">true</span>,</p>
+        <p class="terminal-indent">automateEverything: <span class="terminal-boolean">true</span>,</p>
+        <p class="terminal-indent">teachWhileLearning: <span class="terminal-boolean">true</span>,</p>
+        <p class="terminal-indent">measureImpact: <span class="terminal-string">"94% relevance accuracy | 60% time saved | 4 production apps"</span>,</p>
+        <p class="terminal-indent">currentStack: [<span class="terminal-string">"Python"</span>, <span class="terminal-string">"Node.js"</span>, <span class="terminal-string">"PostgreSQL"</span>, <span class="terminal-string">"AI/LLM"</span>]</p>
+        <p>};</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -172,6 +238,264 @@ $ echo "I build, therefore I ship."</span>
   </div>
 </section>
 
+<!-- Skills Section -->
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="section-label animate-fade-in-up">Arsenal</p>
+        <h2 class="section-title animate-fade-in-up stagger-1">Technical Stack</h2>
+        <p class="section-description animate-fade-in-up stagger-2">
+          Technologies I use to build production-ready systems. From databases to AI pipelines.
+        </p>
+      </div>
+    </div>
+
+    <div class="skills-grid">
+      <!-- Languages -->
+      <div class="skill-category animate-fade-in-up stagger-2">
+        <div class="skill-header">
+          <div class="skill-icon lang">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <h3>Languages</h3>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item" data-level="95">
+            <span class="skill-name">Python</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Production</span>
+          </div>
+          <div class="skill-item" data-level="90">
+            <span class="skill-name">JavaScript</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-item" data-level="85">
+            <span class="skill-name">Node.js</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-item" data-level="70">
+            <span class="skill-name">Java</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Proficient</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Databases -->
+      <div class="skill-category animate-fade-in-up stagger-3">
+        <div class="skill-header">
+          <div class="skill-icon db">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            </svg>
+          </div>
+          <h3>Data & Storage</h3>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item" data-level="95">
+            <span class="skill-name">PostgreSQL</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Production</span>
+          </div>
+          <div class="skill-item" data-level="85">
+            <span class="skill-name">PostGIS</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-item" data-level="80">
+            <span class="skill-name">Pinecone</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-item" data-level="75">
+            <span class="skill-name">MongoDB</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Proficient</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI/ML -->
+      <div class="skill-category animate-fade-in-up stagger-4">
+        <div class="skill-header">
+          <div class="skill-icon ai">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/>
+              <path d="M8.5 8.5v.01"/>
+              <path d="M16 15.5v.01"/>
+              <path d="M12 12v.01"/>
+              <path d="M11 17v.01"/>
+              <path d="M7 14v.01"/>
+            </svg>
+          </div>
+          <h3>AI & LLMs</h3>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item" data-level="90">
+            <span class="skill-name">RAG Architecture</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Production</span>
+          </div>
+          <div class="skill-item" data-level="85">
+            <span class="skill-name">LangChain</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-item" data-level="80">
+            <span class="skill-name">FastAPI</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-item" data-level="75">
+            <span class="skill-name">scikit-learn</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Proficient</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Frameworks -->
+      <div class="skill-category animate-fade-in-up stagger-5">
+        <div class="skill-header">
+          <div class="skill-icon framework">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3>Frameworks</h3>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item" data-level="90">
+            <span class="skill-name">Express.js</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Production</span>
+          </div>
+          <div class="skill-item" data-level="85">
+            <span class="skill-name">React Native</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-item" data-level="80">
+            <span class="skill-name">React.js</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Advanced</span>
+          </div>
+          <div class="skill-item" data-level="75">
+            <span class="skill-name">Django</span>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+            <span class="skill-level">Proficient</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skill Tags Cloud -->
+    <div class="skill-cloud animate-fade-in-up stagger-6">
+      <span class="skill-tag primary">Git</span>
+      <span class="skill-tag">Docker</span>
+      <span class="skill-tag primary">REST APIs</span>
+      <span class="skill-tag">Socket.io</span>
+      <span class="skill-tag primary">Agile/Scrum</span>
+      <span class="skill-tag">CI/CD</span>
+      <span class="skill-tag">Playwright</span>
+      <span class="skill-tag primary">JWT Auth</span>
+      <span class="skill-tag">Cloudinary</span>
+      <span class="skill-tag">Power BI</span>
+      <span class="skill-tag">Linux</span>
+      <span class="skill-tag">WebSockets</span>
+    </div>
+  </div>
+</section>
+
+<!-- Experience Timeline Section -->
+<section class="experience" id="experience">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="section-label animate-fade-in-up">The Path</p>
+        <h2 class="section-title animate-fade-in-up stagger-1">Experience & Education</h2>
+        <p class="section-description animate-fade-in-up stagger-2">
+          From student to teacher to builder. Every step taught me something about code, systems, and people.
+        </p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <!-- Timeline Item 1 -->
+      <div class="timeline-item animate-fade-in-up stagger-2">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">Feb 2024 - Mar 2025</div>
+          <h3 class="timeline-title">Student Assistant — Software Development</h3>
+          <div class="timeline-org">University of Mpumalanga</div>
+          <p class="timeline-desc">Taught Python and Java to 50+ students. Developed automated grading systems reducing workload by 60%. Improved average test scores by 21% through clear technical communication.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Teaching</span>
+            <span class="timeline-tag">Python</span>
+            <span class="timeline-tag">Java</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Item 2 -->
+      <div class="timeline-item animate-fade-in-up stagger-3">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">Jun 2024 - Present</div>
+          <h3 class="timeline-title">Freelance Software Engineer</h3>
+          <div class="timeline-org">Casalinga Tours & Before You Sign</div>
+          <p class="timeline-desc">Built production systems for real clients. Axiora AI (RAG chatbot platform), vehicle verification system with QR codes, AI-powered booking ecosystem. Managed parallel project timelines with Agile-style development.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Node.js</span>
+            <span class="timeline-tag">Python</span>
+            <span class="timeline-tag">AI/ML</span>
+            <span class="timeline-tag">PostgreSQL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Item 3 -->
+      <div class="timeline-item animate-fade-in-up stagger-4">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">Feb 2021 - Nov 2025</div>
+          <h3 class="timeline-title">Advanced Diploma in ICT</h3>
+          <div class="timeline-org">University of Mpumalanga</div>
+          <p class="timeline-desc">NQF Level 7 equivalent. Majors in Application Development & Data Analytics. Coursework: Advanced Database, IoT, Cybersecurity, Machine Learning, AI, Research Methodology.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Graduated</span>
+            <span class="timeline-tag">NQF 7</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Item 4 -->
+      <div class="timeline-item animate-fade-in-up stagger-5">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">2024 - 2026</div>
+          <h3 class="timeline-title">IBM SkillsBuild Certifications</h3>
+          <div class="timeline-org">IBM</div>
+          <p class="timeline-desc">Applied Data Science with Python, Agile Explorer (Scrum/Kanban), Data Fundamentals. Formal recognition of self-taught skills and Agile methodology expertise.</p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Certified</span>
+            <span class="timeline-tag">Agile</span>
+            <span class="timeline-tag">Data Science</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Lab Notes Section -->
 <section class="lab-notes" id="notes">
   <div class="container">
@@ -244,4 +568,6 @@ $ echo "I build, therefore I ship."</span>
       </div>
     </div>
   </div>
+  <script src="/js/hero-terminal.js"></script>
 </section>
+

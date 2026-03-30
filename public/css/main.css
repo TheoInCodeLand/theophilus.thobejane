@@ -1098,16 +1098,16 @@ button {
   position: relative;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: oklch(from var(--card) l c h / 0.6);
+  background-color: hsl(240,1.59%,24.71%);
   backdrop-filter: blur(12px);
-  padding: 1.25rem;
+  padding-top: 2.5rem;
 }
 
-@media (min-width: 640px) {
+/* @media (min-width: 640px) {
   .terminal-card {
     padding: 2rem;
   }
-}
+} */
 
 .terminal-dots {
   position: absolute;
@@ -1127,7 +1127,7 @@ button {
 }
 
 .terminal-dot.red {
-  background: oklch(from var(--destructive) l c h / 0.6);
+  background: #fb615d;
 }
 
 .terminal-dot.red:hover {
@@ -1135,7 +1135,7 @@ button {
 }
 
 .terminal-dot.yellow {
-  background: oklch(0.8 0.15 85 / 0.6);
+  background: #fbbd2e;
 }
 
 .terminal-dot.yellow:hover {
@@ -1143,7 +1143,7 @@ button {
 }
 
 .terminal-dot.green {
-  background: oklch(from var(--primary) l c h / 0.6);
+  background: #1ec13d;
 }
 
 .terminal-dot.green:hover {
@@ -1152,26 +1152,53 @@ button {
 
 .terminal-title {
   position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: oklch(from var(--background) l c h / 0.5);
-  border-radius: 6px;
-  padding: 0.25rem 0.75rem;
+  top: 10px;
+  right: 3%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--muted-foreground);
+  color: rgba(255, 255, 255, 0.796);
 }
 
 .terminal-content {
-  margin-top: 1.5rem;
   overflow: hidden;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  line-height: 1.6;
-  color: oklch(from var(--primary) l c h / 0.8);
+  font-family: 'Courier New', Courier, monospace;
+  background: hsl(0,0%,11.37%);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 58vh;
+  max-height: 58vh;
+  padding: 0.5rem;
+  letter-spacing: 1px;
+  border-radius: 0 0 12px 12px;
+  color: rgba(255, 255, 255, 0.732);
   white-space: pre;
 }
+
+.terminal-input-line {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-prompt-user {
+  display: flex;
+  gap: 1rem;
+}
+
+.terminal-prompt-user input {
+  background: none;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
 
 @media (min-width: 640px) {
   .terminal-content {

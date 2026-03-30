@@ -196,7 +196,7 @@ function updateThemeIcons(isDark) {
 // TYPING ANIMATION
 // ============================================
 function initTypingAnimation() {
-  const roles = ["solutions that ship", "intelligent systems", "while breaking barriers"];
+  const roles = ["Software Dev", "Problem Solver", "Backend Dev", "AI Engineer", "Open Source Enthusiast", "Tech Explorer"];
   const typingElement = document.getElementById('typingText');
   
   if (!typingElement) return;

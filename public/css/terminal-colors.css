@@ -1,0 +1,178 @@
+.terminal-content {
+  position: relative;
+  min-height: 220px;
+  max-height: 400px;
+  font-family: 'JetBrains Mono', 'Geist Mono', 'SF Mono', Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  background: hsl(0, 0%, 11.37%);
+  padding: 0.75rem;
+  border-radius: 0 0 12px 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Output area */
+.terminal-output {
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+}
+
+/* Individual lines */
+.terminal-line {
+  margin: 2px 0;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Input line */
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  position: relative;
+}
+
+/* Prompt styling with colors */
+.terminal-prompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.prompt-user {
+  color: #4ade80; /* Green - username */
+  font-weight: 600;
+}
+
+.prompt-at {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.prompt-host {
+  color: #60a5fa; /* Blue - hostname */
+  font-weight: 600;
+}
+
+.prompt-path {
+  color: #c084fc; /* Purple - path */
+}
+
+.prompt-symbol {
+  color: rgba(255, 255, 255, 0.9);
+  margin-left: 4px;
+}
+
+/* Input field */
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.95);
+  font-family: inherit;
+  font-size: inherit;
+  flex: 1;
+  min-width: 50px;
+  caret-color: transparent;
+  padding: 0;
+  margin: 0;
+  width: auto;
+}
+
+.terminal-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
+}
+
+/* Blinking cursor */
+.terminal-cursor {
+  color: #4ade80;
+  animation: blink 1s step-end infinite;
+  font-weight: 300;
+  flex-shrink: 0;
+  margin-left: -2px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Syntax highlighting colors for command output */
+.cmd-green { color: #4ade80 !important; }      /* Success, user, binaries */
+.cmd-yellow { color: #fbbf24 !important; }     /* Warnings, media, skills */
+.cmd-red { color: #fb7185 !important; }        /* Errors, archives */
+.cmd-cyan { color: #22d3ee !important; }       /* Links, headers, dirs */
+.cmd-blue { color: #60a5fa !important; }       /* Directories */
+.cmd-magenta { color: #e879f9 !important; }    /* AI/ML items */
+.cmd-white { color: rgba(255, 255, 255, 0.95) !important; } /* Normal text */
+.cmd-gray { color: rgba(255, 255, 255, 0.5) !important; }   /* Comments, hints */
+
+/* Project items in terminal */
+.terminal-project-item {
+  margin: 8px 0;
+  padding-left: 12px;
+  border-left: 2px solid rgba(74, 222, 128, 0.3);
+}
+
+/* Scrollbar styling */
+.terminal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.terminal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Clickable terminal card */
+.terminal-card {
+  cursor: text;
+}
+
+.terminal-card:focus-within {
+  border-color: oklch(from var(--primary) l c h / 0.5);
+  box-shadow: 0 0 0 1px oklch(from var(--primary) l c h / 0.2);
+}
+
+/* Make sure mobile text is readable */
+@media (max-width: 640px) {
+  .terminal-content {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+    min-height: 180px;
+  }
+
+  .terminal-input-line {
+    flex-wrap: wrap;
+  }
+
+  .terminal-input {
+    width: 100%;
+    margin-top: 4px;
+  }
+}
+
+/* Selection styling */
+.terminal-content ::selection {
+  background: rgba(74, 222, 128, 0.3);
+  color: white;
+}
