@@ -4,6 +4,8 @@ const LabNote = require('./LabNote');
 const WorkbenchItem = require('./WorkbenchItem');
 const Settings = require('./Settings');
 const Auth = require('./Auth');
+const Chat = require('./Chat');
+const Document = require('./Document');
 
 module.exports = {
   Project,
@@ -11,5 +13,7 @@ module.exports = {
   LabNote,
   WorkbenchItem,
   Settings,
-  Auth
+  Auth,
+  Chat,
+  Document
 };

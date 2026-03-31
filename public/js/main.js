@@ -1,11 +1,3 @@
-/**
- * Theophilus - Main JavaScript
- * Interactive functionality for the portfolio website
- */
-
-// ============================================
-// INITIALIZATION
-// ============================================
 document.addEventListener('DOMContentLoaded', () => {
   initCursorEffects();
   initMobileMenu();
@@ -239,6 +231,234 @@ function initTypingAnimation() {
   // Start typing after delay
   setTimeout(typeWriter, 1000);
 }
+
+// ============================================
+// CHATBOT WIDGET
+// ============================================
+function initChatbot() {
+  const widget = document.getElementById('chatbotWidget');
+  const toggle = document.getElementById('chatbotToggle');
+  const close = document.getElementById('chatbotClose');
+  const container = document.getElementById('chatbotContainer');
+  const form = document.getElementById('chatbotForm');
+  const input = document.getElementById('chatbotInput');
+  const messages = document.getElementById('chatbotMessages');
+  const typing = document.getElementById('chatbotTyping');
+  const welcome = document.getElementById('chatbotWelcome');
+
+  if (!widget) return;
+
+  let sessionId = localStorage.getItem('chatbot_session_id');
+  let messageHistory = [];
+  let isOpen = false;
+
+  // Check if chatbot is enabled
+  fetch('/api/chat-config')
+    .then(r => r.json())
+    .then(config => {
+      if (!config.enabled) {
+        widget.style.display = 'none';
+        return;
+      }
+      if (config.welcome_message && welcome) {
+        welcome.querySelector('p').textContent = config.welcome_message;
+      }
+    })
+    .catch(() => {
+      widget.style.display = 'none';
+    });
+
+  // Toggle chat
+  toggle.addEventListener('click', () => {
+    isOpen = !isOpen;
+    widget.classList.toggle('open', isOpen);
+    if (isOpen) {
+      setTimeout(() => input.focus(), 100);
+    }
+  });
+
+  close.addEventListener('click', () => {
+    isOpen = false;
+    widget.classList.remove('open');
+  });
+
+  // Suggested questions
+  widget.querySelectorAll('.suggested-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const question = btn.dataset.question;
+      sendMessage(question);
+    });
+  });
+
+  // Form submit
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = input.value.trim();
+    if (!message) return;
+    sendMessage(message);
+    input.value = '';
+  });
+
+  function sendMessage(message) {
+    // Add user message
+    addMessage('user', message);
+    messageHistory.push({ role: 'user', content: message });
+
+    // Hide welcome, show typing
+    if (welcome) welcome.style.display = 'none';
+    typing.classList.add('active');
+
+    // Disable input
+    input.disabled = true;
+    form.querySelector('.chatbot-send').disabled = true;
+
+    // Stream response
+    const eventSource = new EventSource('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message,
+        session_id: sessionId,
+        history: messageHistory.slice(-6)
+      })
+    });
+
+    // For fetch with streaming (better browser support)
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message,
+        session_id: sessionId,
+        history: messageHistory.slice(-6)
+      })
+    }).then(response => {
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let assistantMessage = '';
+      let messageEl = null;
+
+      function read() {
+        reader.read().then(({ done, value }) => {
+          if (done) {
+            typing.classList.remove('active');
+            input.disabled = false;
+            form.querySelector('.chatbot-send').disabled = false;
+            input.focus();
+            messageHistory.push({ role: 'assistant', content: assistantMessage });
+            return;
+          }
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+          
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                
+                if (data.content) {
+                  assistantMessage += data.content;
+                  if (!messageEl) {
+                    messageEl = addMessage('assistant', assistantMessage, true);
+                  } else {
+                    updateMessage(messageEl, assistantMessage);
+                  }
+                }
+                
+                if (data.session_id) {
+                  sessionId = data.session_id;
+                  localStorage.setItem('chatbot_session_id', sessionId);
+                }
+                
+                if (data.sources && messageEl) {
+                  addSources(messageEl, data.sources);
+                }
+              } catch (e) {
+                // Ignore parse errors
+              }
+            }
+          }
+          
+          read();
+        });
+      }
+      
+      read();
+    }).catch(err => {
+      console.error('Chat error:', err);
+      typing.classList.remove('active');
+      input.disabled = false;
+      form.querySelector('.chatbot-send').disabled = false;
+      addMessage('assistant', 'Sorry, I had trouble connecting. Please try again or email me directly at thobejanetheo@gmail.com');
+    });
+  }
+
+  function addMessage(role, content, isStreaming = false) {
+    const div = document.createElement('div');
+    div.className = `chatbot-message ${role}`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'chatbot-message-avatar';
+    avatar.textContent = role === 'user' ? 'You' : 'T';
+    
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'chatbot-message-content';
+    contentDiv.innerHTML = formatMessage(content);
+    
+    div.appendChild(avatar);
+    div.appendChild(contentDiv);
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    
+    return contentDiv;
+  }
+
+  function updateMessage(element, content) {
+    element.innerHTML = formatMessage(content);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function addSources(element, sources) {
+    if (!sources || sources.length === 0) return;
+    
+    const sourcesDiv = document.createElement('div');
+    sourcesDiv.className = 'chatbot-sources';
+    sourcesDiv.innerHTML = `<strong>Sources:</strong> ${sources.join(', ')}`;
+    element.appendChild(sourcesDiv);
+  }
+
+  function formatMessage(text) {
+    // Simple markdown formatting
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\n/g, '<br>')
+      .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  }
+
+  // Close on escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      isOpen = false;
+      widget.classList.remove('open');
+    }
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (isOpen && !widget.contains(e.target)) {
+      isOpen = false;
+      widget.classList.remove('open');
+    }
+  });
+}
+
+// Add to DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  // ... existing initializations
+  initChatbot();
+});
 
 // ============================================
 // CURSOR GLOW EFFECT

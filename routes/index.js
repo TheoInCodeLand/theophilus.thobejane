@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Project, BlogPost, LabNote, WorkbenchItem, Settings } = require('../models');
+const chatbotRoutes = require('./chatbot');
 
 // Home page
 router.get('/', async (req, res) => {
@@ -369,5 +370,32 @@ router.get('/api/stats', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// Chatbot routes
+router.use('/', chatbotRoutes);
+
+// Chatbot dashboard
+router.get('/dashboard/chatbot', async (req, res) => {
+  try {
+    const [documentStats, chatAnalytics] = await Promise.all([
+      require('../models/Document').getStats(),
+      require('../models/Chat').getAnalytics(7)
+    ]);
+
+    const settings = await Settings.getPublicSettings();
+
+    res.render('dashboard-chatbot', {
+      title: 'Chatbot Management - Theophilus',
+      description: 'Manage AI knowledge base and chat analytics',
+      documentStats,
+      chatAnalytics,
+      settings
+    });
+  } catch (error) {
+    console.error('Error loading chatbot dashboard:', error);
+    res.status(500).render('error', { error: 'Failed to load chatbot dashboard' });
+  }
+});
+
 
 module.exports = router;

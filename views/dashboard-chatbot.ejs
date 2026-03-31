@@ -1,0 +1,652 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="/" class="sidebar-logo">
+        <div class="sidebar-logo-icon" style="border-radius: 50%; color: var(--primary); border: 1px solid var(--primary); background: var(--background);">TT</div>
+        <div>
+          <div class="sidebar-logo-text">Theophilus</div>
+          <div class="sidebar-logo-sub">Dashboard</div>
+        </div>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Overview</div>
+        <a href="/dashboard" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Dashboard
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Content</div>
+        <a href="/dashboard/blog" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+          Blog Posts
+        </a>
+        <a href="/dashboard/projects" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6z"/></svg>
+          Projects
+        </a>
+        <a href="/dashboard/notes" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Lab Notes
+        </a>
+        <a href="/dashboard/workbench" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Workbench
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">System</div>
+        <a href="/dashboard/settings" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          Settings
+        </a>
+        <a href="/dashboard/chatbot" class="nav-item active">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+          Chatbot
+        </a>
+        <a href="/dashboard/export" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          Import/Export
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="/" class="btn btn-secondary" style="width: 100%; display: flex; justify-content: center; gap: 0.5rem; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border); font-size: 0.875rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        View Site
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="mobile-menu-btn-dash" id="mobileMenuBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <h1 class="page-title" id="pageTitle">Chatbot Management</h1>
+      </div>
+      <div class="top-bar-right">
+        <button class="btn btn-icon btn-ghost" id="darkModeToggle" title="Toggle dark mode">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Chatbot Section -->
+    <div class="section-content active" id="section-chatbot">
+      <div class="content-area">
+        <div class="page-header">
+          <div class="page-header-info">
+            <h1>AI Chatbot Management</h1>
+            <p>Manage knowledge base and monitor conversations</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-primary" onclick="testChatbot()" style="padding: 0.625rem 1.25rem; background: var(--primary); color: var(--primary-foreground); border-radius: 8px; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Test Chatbot
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-card-icon primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+            </div>
+            <div class="stat-card-value" id="statTotalSessions">0</div>
+            <div class="stat-card-label">Total Sessions</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-card-icon success">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+            </div>
+            <div class="stat-card-value" id="statIndexedDocs">0</div>
+            <div class="stat-card-label">Indexed Documents</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-card-icon info">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </div>
+            </div>
+            <div class="stat-card-value" id="statTotalChunks">0</div>
+            <div class="stat-card-label">Knowledge Chunks</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-card-icon warning">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+            </div>
+            <div class="stat-card-value" id="statAvgResponse">0s</div>
+            <div class="stat-card-label">Avg Response Time</div>
+          </div>
+        </div>
+
+        <!-- Settings & Upload Grid -->
+        <div class="dashboard-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+          <!-- Chatbot Settings -->
+          <div class="settings-card" style="background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </div>
+              <div>
+                <h3 style="font-size: 1.125rem; margin-bottom: 0.25rem;">Chatbot Settings</h3>
+                <p style="font-size: 0.875rem; color: var(--muted-foreground);">Configure AI behavior</p>
+              </div>
+            </div>
+            
+            <form id="chatbotSettingsForm">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding: 0.75rem; background: var(--background); border-radius: 6px;">
+                <span style="font-size: 0.875rem;">Enable Chatbot</span>
+                <label class="toggle-switch" style="position: relative; display: inline-block; width: 44px; height: 24px;">
+                  <input type="checkbox" name="enabled" id="settingEnabled" style="opacity: 0; width: 0; height: 0;">
+                  <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border); transition: .3s; border-radius: 24px;"></span>
+                </label>
+              </div>
+              
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" style="display: block; font-size: 0.875rem; margin-bottom: 0.5rem;">Welcome Message</label>
+                <textarea class="form-input" name="welcome_message" id="settingWelcome" rows="2" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem; resize: vertical;"></textarea>
+              </div>
+              
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" style="display: block; font-size: 0.875rem; margin-bottom: 0.5rem;">LLM Model</label>
+                <select class="form-select" name="model" id="settingModel" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
+                  <option value="llama-3.3-70b-versatile">Llama 3.3 70B</option>
+                  <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                  <option value="gemma-2-9b-it">Gemma 2 9B</option>
+                </select>
+              </div>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                <div class="form-group">
+                  <label class="form-label" style="display: block; font-size: 0.875rem; margin-bottom: 0.5rem;">Temperature</label>
+                  <input type="number" class="form-input" name="temperature" id="settingTemp" min="0" max="2" step="0.1" value="0.7" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="display: block; font-size: 0.875rem; margin-bottom: 0.5rem;">Max Tokens</label>
+                  <input type="number" class="form-input" name="max_tokens" id="settingTokens" min="256" max="4096" step="256" value="1024" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
+                </div>
+              </div>
+              
+              <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem; background: var(--primary); color: var(--primary-foreground); border-radius: 8px; font-size: 0.875rem;">Save Settings</button>
+            </form>
+          </div>
+
+          <!-- Document Upload -->
+          <div class="settings-card" style="background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <div style="width: 48px; height: 48px; background: rgba(34, 197, 94, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <div>
+                <h3 style="font-size: 1.125rem; margin-bottom: 0.25rem;">Upload Knowledge</h3>
+                <p style="font-size: 0.875rem; color: var(--muted-foreground);">Add documents to AI memory</p>
+              </div>
+            </div>
+            
+            <form id="uploadForm" enctype="multipart/form-data">
+              <div id="uploadArea" style="border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin-bottom: 1rem; cursor: pointer; transition: all 0.2s;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto 1rem; color: var(--muted-foreground);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <p style="font-size: 0.875rem; color: var(--foreground); margin-bottom: 0.5rem;">Drop PDF, DOCX, or TXT here</p>
+                <span style="font-size: 0.75rem; color: var(--muted-foreground);">or click to browse</span>
+                <input type="file" name="file" id="fileInput" accept=".pdf,.txt,.md,.doc,.docx" style="display: none;">
+              </div>
+              
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" style="display: block; font-size: 0.875rem; margin-bottom: 0.5rem;">Category</label>
+                <select class="form-select" name="category" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
+                  <option value="resume">Resume/CV</option>
+                  <option value="certification">Certification</option>
+                  <option value="project">Project Documentation</option>
+                  <option value="general">General</option>
+                </select>
+              </div>
+              
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" style="display: block; font-size: 0.875rem; margin-bottom: 0.5rem;">Description (optional)</label>
+                <input type="text" class="form-input" name="description" placeholder="e.g., IBM Data Science Certificate" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
+              </div>
+              
+              <button type="submit" class="btn btn-primary" id="uploadBtn" style="width: 100%; padding: 0.75rem; background: var(--primary); color: var(--primary-foreground); border-radius: 8px; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Upload & Index
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Documents Table -->
+        <div class="data-table-container" style="background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);">
+            <h3 style="font-size: 1rem; font-weight: 600;">Knowledge Base Documents</h3>
+            <button class="btn btn-secondary" onclick="refreshDocuments()" style="padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Refresh
+            </button>
+          </div>
+          <table class="data-table" style="width: 100%;">
+            <thead>
+              <tr style="background: var(--background);">
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Document</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Category</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Status</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Chunks</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Uploaded</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="documentsBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Recent Conversations -->
+        <div class="data-table-container" style="background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);">
+            <h3 style="font-size: 1rem; font-weight: 600;">Recent Conversations</h3>
+          </div>
+          <table class="data-table" style="width: 100%;">
+            <thead>
+              <tr style="background: var(--background);">
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Session</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Messages</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Started</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); font-weight: 500;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="conversationsBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Test Chatbot Modal -->
+<div class="modal-overlay" id="testChatbotModal">
+  <div class="modal" style="max-width: 500px;">
+    <div class="modal-header">
+      <h3 class="modal-title">Test Chatbot</h3>
+      <button class="modal-close" onclick="closeModal('testChatbotModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="testChatMessages" style="height: 300px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; background: var(--background);">
+        <div style="padding: 0.75rem; background: var(--primary); color: var(--primary-foreground); border-radius: 8px; border-bottom-left-radius: 4px; margin-bottom: 0.5rem; max-width: 80%;">
+          Hi! I'm TheoBot. Ask me anything about Theophilus—his skills, projects, experience, or how to get in touch.
+        </div>
+      </div>
+      <form id="testChatForm" style="display: flex; gap: 0.5rem;">
+        <input type="text" id="testChatInput" placeholder="Ask a question..." style="flex: 1; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
+        <button type="submit" style="padding: 0.625rem 1rem; background: var(--primary); color: var(--primary-foreground); border-radius: 6px; border: none; cursor: pointer;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// Load initial data
+async function loadDashboardData() {
+  try {
+    const [settings, docs, analytics] = await Promise.all([
+      fetch('/api/admin/chat-settings').then(r => r.json()),
+      fetch('/api/admin/documents').then(r => r.json()),
+      fetch('/api/admin/chat-analytics?days=7').then(r => r.json())
+    ]);
+    
+    // Populate settings
+    document.getElementById('settingEnabled').checked = settings.enabled;
+    document.getElementById('settingWelcome').value = settings.welcome_message || '';
+    document.getElementById('settingModel').value = settings.model || 'llama-3.3-70b-versatile';
+    document.getElementById('settingTemp').value = settings.temperature || 0.7;
+    document.getElementById('settingTokens').value = settings.max_tokens || 1024;
+    
+    // Update stats
+    const totalSessions = analytics.analytics?.reduce((a, b) => a + (b.total_sessions || 0), 0) || 0;
+    document.getElementById('statTotalSessions').textContent = totalSessions;
+    document.getElementById('statIndexedDocs').textContent = docs.filter(d => d.index_status === 'indexed').length;
+    document.getElementById('statTotalChunks').textContent = docs.reduce((a, b) => a + (b.chunk_count || 0), 0);
+    
+    renderDocuments(docs);
+    renderConversations(analytics.recent_sessions || []);
+  } catch (err) {
+    console.error('Failed to load dashboard data:', err);
+    showToast('Failed to load dashboard data', 'error');
+  }
+}
+
+function renderDocuments(docs) {
+  const tbody = document.getElementById('documentsBody');
+  tbody.innerHTML = docs.map(doc => `
+    <tr style="border-bottom: 1px solid var(--border);">
+      <td style="padding: 0.75rem 1rem;">
+        <div style="font-weight: 500; margin-bottom: 0.25rem;">${escapeHtml(doc.original_name)}</div>
+        <div style="font-size: 0.75rem; color: var(--muted-foreground);">${escapeHtml(doc.description || 'No description')}</div>
+      </td>
+      <td style="padding: 0.75rem 1rem;">
+        <span style="display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; text-transform: capitalize; background: ${getCategoryColor(doc.category)}; color: white;">
+          ${doc.category}
+        </span>
+      </td>
+      <td style="padding: 0.75rem 1rem;">
+        <span style="display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; text-transform: capitalize; color: ${getStatusColor(doc.index_status)};">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: currentColor;"></span>
+          ${doc.index_status}
+        </span>
+      </td>
+      <td style="padding: 0.75rem 1rem; font-size: 0.875rem;">${doc.chunk_count || 0}</td>
+      <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: var(--muted-foreground);">${new Date(doc.created_at).toLocaleDateString()}</td>
+      <td style="padding: 0.75rem 1rem;">
+        <button class="btn btn-ghost" onclick="deleteDocument(${doc.id})" style="padding: 0.375rem; color: #ef4444;" title="Delete">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderConversations(sessions) {
+  const tbody = document.getElementById('conversationsBody');
+  tbody.innerHTML = sessions.map(session => `
+    <tr style="border-bottom: 1px solid var(--border);">
+      <td style="padding: 0.75rem 1rem; font-family: monospace; font-size: 0.875rem;">${session.session_id.substring(0, 8)}...</td>
+      <td style="padding: 0.75rem 1rem; font-size: 0.875rem;">${session.message_count}</td>
+      <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: var(--muted-foreground);">${new Date(session.started_at).toLocaleString()}</td>
+      <td style="padding: 0.75rem 1rem;">
+        <button class="btn btn-ghost" onclick="viewConversation('${session.session_id}')" style="padding: 0.375rem;" title="View">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function getCategoryColor(category) {
+  const colors = {
+    resume: '#3b82f6',
+    certification: '#22c55e',
+    project: '#f59e0b',
+    general: '#6b7280'
+  };
+  return colors[category] || colors.general;
+}
+
+function getStatusColor(status) {
+  const colors = {
+    indexed: '#22c55e',
+    pending: '#f59e0b',
+    processing: '#3b82f6',
+    error: '#ef4444'
+  };
+  return colors[status] || '#6b7280';
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Settings form
+document.getElementById('chatbotSettingsForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = {
+    enabled: formData.get('enabled') === 'on',
+    welcome_message: formData.get('welcome_message'),
+    model: formData.get('model'),
+    temperature: parseFloat(formData.get('temperature')),
+    max_tokens: parseInt(formData.get('max_tokens'))
+  };
+  
+  try {
+    await fetch('/api/admin/chat-settings', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    showToast('Settings saved successfully', 'success');
+  } catch (err) {
+    showToast('Failed to save settings', 'error');
+  }
+});
+
+// Upload form
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('fileInput');
+
+uploadArea.addEventListener('click', () => fileInput.click());
+uploadArea.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadArea.style.borderColor = 'var(--primary)';
+  uploadArea.style.background = 'var(--primary)';
+});
+uploadArea.addEventListener('dragleave', () => {
+  uploadArea.style.borderColor = 'var(--border)';
+  uploadArea.style.background = 'transparent';
+});
+uploadArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadArea.style.borderColor = 'var(--border)';
+  uploadArea.style.background = 'transparent';
+  fileInput.files = e.dataTransfer.files;
+  updateUploadLabel();
+});
+
+fileInput.addEventListener('change', updateUploadLabel);
+
+function updateUploadLabel() {
+  const file = fileInput.files[0];
+  if (file) {
+    uploadArea.querySelector('p').textContent = file.name;
+    uploadArea.querySelector('span').textContent = `${(file.size / 1024).toFixed(1)} KB`;
+  }
+}
+
+document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('uploadBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>Indexing...</span>';
+  
+  try {
+    const formData = new FormData(e.target);
+    const response = await fetch('/api/admin/documents', {
+      method: 'POST',
+      body: formData
+    });
+    
+    if (response.ok) {
+      showToast('Document uploaded and indexing started', 'success');
+      e.target.reset();
+      uploadArea.querySelector('p').textContent = 'Drop PDF, DOCX, or TXT here';
+      uploadArea.querySelector('span').textContent = 'or click to browse';
+      setTimeout(refreshDocuments, 2000);
+    } else {
+      throw new Error('Upload failed');
+    }
+  } catch (err) {
+    showToast('Upload failed: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Upload & Index
+    `;
+  }
+});
+
+async function deleteDocument(id) {
+  if (!confirm('Delete this document? This cannot be undone.')) return;
+  
+  try {
+    await fetch(`/api/admin/documents/${id}`, { method: 'DELETE' });
+    showToast('Document deleted', 'success');
+    refreshDocuments();
+  } catch (err) {
+    showToast('Failed to delete document', 'error');
+  }
+}
+
+async function refreshDocuments() {
+  const docs = await fetch('/api/admin/documents').then(r => r.json());
+  renderDocuments(docs);
+  showToast('Documents refreshed', 'success');
+}
+
+function testChatbot() {
+  openModal('testChatbotModal');
+}
+
+function viewConversation(sessionId) {
+  window.open(`/dashboard/chatbot/conversation/${sessionId}`, '_blank');
+}
+
+// Test chat form
+document.getElementById('testChatForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const input = document.getElementById('testChatInput');
+  const message = input.value.trim();
+  if (!message) return;
+  
+  const messagesDiv = document.getElementById('testChatMessages');
+  
+  // Add user message
+  messagesDiv.innerHTML += `
+    <div style="padding: 0.75rem; background: var(--secondary); border-radius: 8px; border-bottom-right-radius: 4px; margin-bottom: 0.5rem; margin-left: auto; max-width: 80%;">
+      ${escapeHtml(message)}
+    </div>
+  `;
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  input.value = '';
+  
+  // Get response from chatbot
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+    
+    const data = await response.json();
+    
+    messagesDiv.innerHTML += `
+      <div style="padding: 0.75rem; background: var(--primary); color: var(--primary-foreground); border-radius: 8px; border-bottom-left-radius: 4px; margin-bottom: 0.5rem; max-width: 80%;">
+        ${escapeHtml(data.response || 'Sorry, I could not process that.')}
+      </div>
+    `;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  } catch (err) {
+    messagesDiv.innerHTML += `
+      <div style="padding: 0.75rem; background: #ef4444; color: white; border-radius: 8px; margin-bottom: 0.5rem;">
+        Error: Could not get response
+      </div>
+    `;
+  }
+});
+
+// Initialize
+loadDashboardData();
+
+// Toast notification
+function showToast(message, type = 'success') {
+  const container = document.querySelector('.toast-container') || createToastContainer();
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    background: ${type === 'success' ? '#22c55e' : type === 'error' ? '#ef4444' : '#f59e0b'};
+    color: white;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: slideIn 0.3s ease;
+  `;
+  toast.innerHTML = `
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      ${type === 'success' ? '<path d="M20 6L9 17l-5-5"/>' : '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>'}
+    </svg>
+    ${message}
+  `;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function createToastContainer() {
+  const container = document.createElement('div');
+  container.className = 'toast-container';
+  container.style.cssText = `
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  `;
+  document.body.appendChild(container);
+  return container;
+}
+
+// Modal utilities
+function openModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+// Close modal on overlay click
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+
+// Close modal on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+      modal.classList.remove('active');
+    });
+    document.body.style.overflow = '';
+  }
+});
+</script>
