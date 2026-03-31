@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= locals.title || 'Theophilus - Digital Laboratory' %></title>
+  <meta name="description" content="<%= locals.description || 'A digital workshop where code meets curiosity. Experiments, prototypes, and open-source artifacts.' %>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="/images/logo-favi.png" type="image/x-icon">
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/hero-terminal.css">
+  <link rel="stylesheet" href="/css/hero-terminal-inline.css">
+  <link rel="stylesheet" href="/css/career.css">
+</head>
+<body class="scanlines">
+  <!-- Cursor Effects -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- Header -->
+  <% if (locals.title === "Dashboard - Theophilus") { %>
+    <main>
+      <%- body %>
+    </main>
+  <% } else if (locals.title === "Chatbot Management - Theophilus"){ %>
+    <main>
+      <%- body %>
+    </main>
+  <% } else { %>
+    <%- include('partials/header') %>
+    <main>
+      <%- body %>
+    </main>
+    <%- include('partials/footer') %>
+  <% } %>
+
+  <!-- Chatbot Widget -->
+  <div id="chatbotWidget" class="chatbot-widget">
+    <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span class="chatbot-pulse"></span>
+    </button>
+    
+    <div class="chatbot-container" id="chatbotContainer">
+      <div class="chatbot-header">
+        <div class="chatbot-avatar">T</div>
+        <div class="chatbot-info">
+          <h4>TheoBot</h4>
+          <span class="chatbot-status">
+            <span class="status-dot"></span>
+            Online
+          </span>
+        </div>
+        <button class="chatbot-close" id="chatbotClose" aria-label="Close chat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="chatbot-messages" id="chatbotMessages">
+        <div class="chatbot-welcome" id="chatbotWelcome">
+          <p>Hi! I'm TheoBot. Ask me anything about Theophilus—his skills, projects, experience, or how to get in touch.</p>
+          <div class="suggested-questions">
+            <button class="suggested-q" data-question="What are Theo's top skills?">Top skills?</button>
+            <button class="suggested-q" data-question="Tell me about Axiora AI">Axiora AI project?</button>
+            <button class="suggested-q" data-question="Is he available for hire?">Available for hire?</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="chatbot-input-area">
+        <div class="chatbot-typing" id="chatbotTyping">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <form class="chatbot-form" id="chatbotForm">
+          <input 
+            type="text" 
+            class="chatbot-input" 
+            id="chatbotInput" 
+            placeholder="Ask about Theo..."
+            autocomplete="off"
+          />
+          <button type="submit" class="chatbot-send" aria-label="Send message">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/js/hero-terminal.js"></script>
+  <script src="/js/hero-terminal-inline.js"></script>
+  <script src="/js/hero-terminal-colored.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
