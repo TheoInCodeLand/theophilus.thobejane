@@ -23,7 +23,7 @@ async function checkPythonHealth() {
   }
   
   try {
-    await axios.get(`${CHATBOT_SERVICE_URL}/health`, { timeout: 5000 });
+    await axios.get(`${CHATBOT_SERVICE_URL}/health`, { timeout: 60000 });
     pythonServiceHealthy = true;
     lastHealthCheck = now;
     return true;
