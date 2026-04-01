@@ -372,14 +372,18 @@ router.put('/api/admin/chat-settings', async (req, res) => {
 });
 
 router.get('/api/admin/upload-signature', async (req, res) => {
+  console.log('DEBUG ENV:', {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? 'EXISTS' : 'MISSING',
+    api_key: process.env.CLOUDINARY_API_KEY ? 'EXISTS' : 'MISSING',
+    node_env: process.env.NODE_ENV ? 'EXISTS' : 'MISSING'
+  });
   try {
     const timestamp = Math.round((new Date).getTime() / 1000);
     
     // Generate signature for unsigned upload preset or specific folder
     const signature = req.app.locals.cloudinary.utils.api_sign_request({
       timestamp: timestamp,
-      folder: 'portfolio-knowledge',
-      resource_type: 'auto'
+      folder: 'portfolio-knowledge'
     }, process.env.CLOUDINARY_API_SECRET);
 
     res.json({
@@ -407,7 +411,7 @@ router.post('/api/chat-simple', checkEnabled, async (req, res) => {
       fetch_projects: true
     }, {
       timeout: 30000,
-      responseType: 'json' // Note: your Python returns SSE, so this won't work directly
+      responseType: 'json' // Note: your Python returns SSE, so this won't work directly.
     });
     
     // Actually, better to just proxy or use a different approach

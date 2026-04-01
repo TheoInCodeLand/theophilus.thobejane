@@ -12,6 +12,7 @@ import os
 import json
 import asyncio
 import time
+import tempfile
 import logging
 from tempfile import NamedTemporaryFile
 import traceback

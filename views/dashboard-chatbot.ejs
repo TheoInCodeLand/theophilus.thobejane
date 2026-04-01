@@ -201,21 +201,25 @@
               </div>
               <div>
                 <h3 style="font-size: 1.125rem; margin-bottom: 0.25rem;">Upload Knowledge</h3>
-                <p style="font-size: 0.875rem; color: var(--muted-foreground);">Add documents to AI memory</p>
+                <p style="font-size: 0.875rem; color: var(--muted-foreground);">Add documents to AI memory via Cloudinary</p>
               </div>
             </div>
             
-            <form id="uploadForm" enctype="multipart/form-data">
+            <form id="uploadForm">
               <div id="uploadArea" style="border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; margin-bottom: 1rem; cursor: pointer; transition: all 0.2s;">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto 1rem; color: var(--muted-foreground);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                <p style="font-size: 0.875rem; color: var(--foreground); margin-bottom: 0.5rem;">Drop PDF, DOCX, or TXT here</p>
-                <span style="font-size: 0.75rem; color: var(--muted-foreground);">or click to browse</span>
-                <input type="file" name="file" id="fileInput" accept=".pdf,.txt,.md,.doc,.docx" style="display: none;">
+                <svg id="uploadIcon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin: 0 auto 1rem; color: var(--muted-foreground);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <p id="uploadText" style="font-size: 0.875rem; color: var(--foreground); margin-bottom: 0.5rem;">Drop PDF, DOCX, or TXT here</p>
+                <span id="uploadSubtext" style="font-size: 0.75rem; color: var(--muted-foreground);">or click to browse</span>
+                <input type="file" id="fileInput" accept=".pdf,.txt,.md,.doc,.docx" style="display: none;">
+              </div>
+              
+              <div class="progress-bar" id="progressBar" style="display: none; width: 100%; height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 1rem; overflow: hidden;">
+                <div id="progressFill" style="width: 0%; height: 100%; background: var(--primary); transition: width 0.3s;"></div>
               </div>
               
               <div class="form-group" style="margin-bottom: 1rem;">
                 <label class="form-label" style="display: block; font-size: 0.875rem; margin-bottom: 0.5rem;">Category</label>
-                <select class="form-select" name="category" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
+                <select class="form-select" id="docCategory" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
                   <option value="resume">Resume/CV</option>
                   <option value="certification">Certification</option>
                   <option value="project">Project Documentation</option>
@@ -225,12 +229,12 @@
               
               <div class="form-group" style="margin-bottom: 1rem;">
                 <label class="form-label" style="display: block; font-size: 0.875rem; margin-bottom: 0.5rem;">Description (optional)</label>
-                <input type="text" class="form-input" name="description" placeholder="e.g., IBM Data Science Certificate" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
+                <input type="text" id="docDescription" placeholder="e.g., IBM Data Science Certificate" style="width: 100%; padding: 0.625rem; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 0.875rem;">
               </div>
               
               <button type="submit" class="btn btn-primary" id="uploadBtn" style="width: 100%; padding: 0.75rem; background: var(--primary); color: var(--primary-foreground); border-radius: 8px; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                Upload & Index
+                <span id="btnText">Upload & Index</span>
               </button>
             </form>
           </div>
@@ -436,70 +440,135 @@ document.getElementById('chatbotSettingsForm').addEventListener('submit', async 
   }
 });
 
-// Upload form
+// =============================================================================
+// UPLOAD SECTION - REPLACED WITH DIRECT CLOUDINARY UPLOAD (from File 1)
+// =============================================================================
 const uploadArea = document.getElementById('uploadArea');
 const fileInput = document.getElementById('fileInput');
+const uploadForm = document.getElementById('uploadForm');
+const progressBar = document.getElementById('progressBar');
+const progressFill = document.getElementById('progressFill');
+let selectedFile = null;
 
 uploadArea.addEventListener('click', () => fileInput.click());
+
 uploadArea.addEventListener('dragover', (e) => {
   e.preventDefault();
   uploadArea.style.borderColor = 'var(--primary)';
-  uploadArea.style.background = 'var(--primary)';
+  uploadArea.style.background = 'rgba(var(--primary-rgb), 0.05)';
 });
+
 uploadArea.addEventListener('dragleave', () => {
   uploadArea.style.borderColor = 'var(--border)';
   uploadArea.style.background = 'transparent';
 });
+
 uploadArea.addEventListener('drop', (e) => {
   e.preventDefault();
   uploadArea.style.borderColor = 'var(--border)';
   uploadArea.style.background = 'transparent';
-  fileInput.files = e.dataTransfer.files;
-  updateUploadLabel();
+  selectedFile = e.dataTransfer.files[0];
+  updateUploadUI(selectedFile);
 });
 
-fileInput.addEventListener('change', updateUploadLabel);
+fileInput.addEventListener('change', (e) => {
+  selectedFile = e.target.files[0];
+  updateUploadUI(selectedFile);
+});
 
-function updateUploadLabel() {
-  const file = fileInput.files[0];
+function updateUploadUI(file) {
   if (file) {
-    uploadArea.querySelector('p').textContent = file.name;
-    uploadArea.querySelector('span').textContent = `${(file.size / 1024).toFixed(1)} KB`;
+    document.getElementById('uploadText').textContent = file.name;
+    document.getElementById('uploadSubtext').textContent = `${(file.size / 1024).toFixed(1)} KB`;
+    document.getElementById('uploadIcon').style.color = 'var(--primary)';
   }
 }
 
-document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+uploadForm.addEventListener('submit', async (e) => {
   e.preventDefault();
+  if (!selectedFile) {
+    showToast('Please select a file first', 'error');
+    return;
+  }
+
   const btn = document.getElementById('uploadBtn');
+  const btnText = document.getElementById('btnText');
   btn.disabled = true;
-  btn.innerHTML = '<span>Indexing...</span>';
-  
+  btnText.textContent = 'Uploading...';
+  progressBar.style.display = 'block';
+
   try {
-    const formData = new FormData(e.target);
-    const response = await fetch('/api/admin/documents', {
+    // Step 1: Get signature from Node backend
+    const sigRes = await fetch('/api/admin/upload-signature');
+    if (!sigRes.ok) throw new Error('Failed to get upload signature');
+    const sigData = await sigRes.json();
+
+    // Step 2: Upload directly to Cloudinary
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    formData.append('api_key', sigData.api_key);
+    formData.append('timestamp', sigData.timestamp);
+    formData.append('signature', sigData.signature);
+    formData.append('folder', sigData.folder);
+    formData.append('resource_type', 'auto');
+
+    const cloudinaryRes = await fetch(`https://api.cloudinary.com/v1_1/${sigData.cloud_name}/auto/upload`, {
       method: 'POST',
       body: formData
     });
-    
-    if (response.ok) {
-      showToast('Document uploaded and indexing started', 'success');
-      e.target.reset();
-      uploadArea.querySelector('p').textContent = 'Drop PDF, DOCX, or TXT here';
-      uploadArea.querySelector('span').textContent = 'or click to browse';
-      setTimeout(refreshDocuments, 2000);
-    } else {
-      throw new Error('Upload failed');
+
+    if (!cloudinaryRes.ok) {
+      const error = await cloudinaryRes.json();
+      throw new Error(error.error?.message || 'Cloudinary upload failed');
     }
+
+    const cloudinaryData = await cloudinaryRes.json();
+    progressFill.style.width = '50%';
+    btnText.textContent = 'Indexing...';
+
+    // Step 3: Save document metadata to your database
+    const docRes = await fetch('/api/admin/documents', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        file_url: cloudinaryData.secure_url,
+        original_name: selectedFile.name,
+        category: document.getElementById('docCategory').value,
+        description: document.getElementById('docDescription').value,
+        file_size: selectedFile.size,
+        mime_type: selectedFile.type
+      })
+    });
+
+    if (!docRes.ok) {
+      const error = await docRes.json();
+      throw new Error(error.error || 'Failed to save document');
+    }
+
+    progressFill.style.width = '100%';
+    showToast('Document uploaded and indexing started!', 'success');
+    
+    // Reset form
+    setTimeout(() => {
+      uploadForm.reset();
+      selectedFile = null;
+      document.getElementById('uploadText').textContent = 'Drop PDF, DOCX, or TXT here';
+      document.getElementById('uploadSubtext').textContent = 'or click to browse';
+      document.getElementById('uploadIcon').style.color = 'var(--muted-foreground)';
+      progressBar.style.display = 'none';
+      progressFill.style.width = '0%';
+      refreshDocuments();
+    }, 1500);
+
   } catch (err) {
     showToast('Upload failed: ' + err.message, 'error');
+    console.error('Upload error:', err);
   } finally {
     btn.disabled = false;
-    btn.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Upload & Index
-    `;
+    btnText.textContent = 'Upload & Index';
   }
 });
+// =============================================================================
 
 async function deleteDocument(id) {
   if (!confirm('Delete this document? This cannot be undone.')) return;
@@ -528,8 +597,6 @@ function viewConversation(sessionId) {
 }
 
 // Test chat form
-// In dashboard-chatbot.html, replace the testChatForm handler (around line 456)
-
 document.getElementById('testChatForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const input = document.getElementById('testChatInput');
