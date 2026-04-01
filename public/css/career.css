@@ -423,6 +423,14 @@
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--muted-foreground);
+  transition: all 1s ease;
+  cursor: text;
+}
+
+.timeline-tag:hover {
+  border-color: oklch(from var(--primary) l c h / 0.5);
+  background: oklch(from var(--primary) l c h / 0.1);
+  color: var(--primary);
 }
 
 /* ============================================

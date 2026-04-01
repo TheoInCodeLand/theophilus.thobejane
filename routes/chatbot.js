@@ -1,51 +1,63 @@
+let pythonServiceHealthy = true;
+let lastHealthCheck = 0;
+const HEALTH_CHECK_INTERVAL = 30000;
+
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
 const path = require('path');
 const fs = require('fs').promises;
 const { Document, Chat, Settings } = require('../models');
 const axios = require('axios');
+const rateLimit = require('express-rate-limit');
 
-// Configure multer for PDF uploads
-const storage = multer.diskStorage({
-  destination: async (req, file, cb) => {
-    const uploadDir = path.join(__dirname, '../uploads/documents');
-    await fs.mkdir(uploadDir, { recursive: true });
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, `doc-${uniqueSuffix}${path.extname(file.originalname)}`);
-  }
+const chatRateLimit = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 10,
+  message: { error: 'Too many messages. Please slow down.' },
 });
 
-const upload = multer({ 
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
-  fileFilter: (req, file, cb) => {
-    const allowed = ['.pdf', '.txt', '.md', '.doc', '.docx'];
-    const ext = path.extname(file.originalname).toLowerCase();
-    if (allowed.includes(ext)) {
-      cb(null, true);
-    } else {
-      cb(new Error('Only PDF, TXT, MD, DOC, DOCX files allowed'));
-    }
+async function checkPythonHealth() {
+  const now = Date.now();
+  if (now - lastHealthCheck < HEALTH_CHECK_INTERVAL) {
+    return pythonServiceHealthy;
   }
-});
+  
+  try {
+    await axios.get(`${CHATBOT_SERVICE_URL}/health`, { timeout: 5000 });
+    pythonServiceHealthy = true;
+    lastHealthCheck = now;
+    return true;
+  } catch (error) {
+    pythonServiceHealthy = false;
+    lastHealthCheck = now;
+    console.error('Python service health check failed:', error.message);
+    return false;
+  }
+}
 
-const CHATBOT_SERVICE_URL = process.env.CHATBOT_SERVICE_URL || 'http://localhost:8000';
-
-// Middleware to check if chatbot is enabled
 const checkEnabled = async (req, res, next) => {
   const enabled = await Settings.get('chatbot_enabled');
   if (enabled !== 'true') {
     return res.status(503).json({ error: 'Chatbot temporarily disabled' });
   }
+  
+  // Check if Python service is up
+  const healthy = await checkPythonHealth();
+  if (!healthy) {
+    return res.status(503).json({ 
+      error: 'AI service temporarily unavailable. Please try again in a moment.' 
+    });
+  }
+  
   next();
 };
 
+const CHATBOT_SERVICE_URL = process.env.CHATBOT_SERVICE_URL || 'http://localhost:8000';
+
 // PUBLIC API: Chat streaming endpoint
-router.post('/api/chat', checkEnabled, async (req, res) => {
+router.post('/api/chat', chatRateLimit,checkEnabled, async (req, res) => {
+  let session;
+  
   try {
     const { message, session_id, history = [] } = req.body;
     
@@ -54,7 +66,6 @@ router.post('/api/chat', checkEnabled, async (req, res) => {
     }
 
     // Get or create session
-    let session;
     if (session_id) {
       session = await Chat.getSession(session_id);
     }
@@ -73,102 +84,163 @@ router.post('/api/chat', checkEnabled, async (req, res) => {
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
+    res.setHeader('X-Accel-Buffering', 'no'); // Disable nginx buffering
 
     // Check if query needs project data
-    const needsProjects = /project|built|portfolio|github|experience|work/i.test(message);
+    const needsProjects = /project|built|portfolio|github|experience|work|axiora|app|what.*built|showcase/i.test(message);
 
-    // Stream from Python service
+    // Stream from Python service with timeout
     const response = await axios.post(`${CHATBOT_SERVICE_URL}/chat`, {
       message,
       session_id: session.session_id,
       history,
       fetch_projects: needsProjects
     }, {
-      responseType: 'stream'
+      responseType: 'stream',
+      timeout: 30000, // 30 second timeout
+      headers: {
+        'Accept': 'text/event-stream',
+        'Cache-Control': 'no-cache'
+      }
     });
 
     let fullResponse = '';
     let sources = [];
+    let hasReceivedData = false;
 
+    // Handle stream with proper error boundaries
     response.data.on('data', (chunk) => {
-      const lines = chunk.toString().split('\n');
-      for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          try {
-            const data = JSON.parse(line.slice(6));
-            if (data.content) {
-              fullResponse += data.content;
-              res.write(`data: ${JSON.stringify(data)}\n\n`);
+      try {
+        hasReceivedData = true;
+        const lines = chunk.toString().split('\n');
+        
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const jsonStr = line.slice(6).trim();
+            if (!jsonStr) continue;
+            
+            try {
+              const data = JSON.parse(jsonStr);
+              
+              if (data.content) {
+                fullResponse += data.content;
+                res.write(`data: ${JSON.stringify(data)}\n\n`);
+              }
+              
+              if (data.sources) {
+                sources = data.sources;
+              }
+              
+              if (data.done) {
+                // Store complete response
+                Chat.addMessage(session.session_id, 'assistant', fullResponse, {
+                  sources,
+                  timestamp: new Date().toISOString(),
+                  metadata: data.meta || {}
+                }).catch(err => console.error('Failed to store message:', err));
+              }
+              
+              if (data.error) {
+                console.error('Stream error from Python:', data.error);
+                res.write(`data: ${JSON.stringify({ error: data.error })}\n\n`);
+              }
+            } catch (parseError) {
+              // Ignore malformed JSON lines
+              console.debug('Parse error for line:', jsonStr.substring(0, 100));
             }
-            if (data.sources) {
-              sources = data.sources;
-            }
-            if (data.done) {
-              // Store complete response
-              Chat.addMessage(session.session_id, 'assistant', fullResponse, {
-                sources,
-                timestamp: new Date().toISOString()
-              });
-            }
-          } catch (e) {
-            // Ignore parse errors
           }
         }
+      } catch (error) {
+        console.error('Stream processing error:', error);
       }
     });
 
     response.data.on('end', () => {
+      if (!hasReceivedData) {
+        // No data received - Python service issue
+        res.write(`data: ${JSON.stringify({ 
+          error: 'No response from AI service',
+          content: "I'm having trouble connecting to my knowledge base. Please try again or email me at thobejanetheo@gmail.com"
+        })}\n\n`);
+      }
+      
       res.write(`data: ${JSON.stringify({ session_id: session.session_id, done: true })}\n\n`);
       res.end();
     });
 
     response.data.on('error', (err) => {
-      console.error('Stream error:', err);
-      res.write(`data: ${JSON.stringify({ error: 'Stream interrupted' })}\n\n`);
+      console.error('Stream error:', err.message);
+      res.write(`data: ${JSON.stringify({ 
+        error: 'Stream interrupted',
+        content: "Connection interrupted. Please try again."
+      })}\n\n`);
       res.end();
     });
 
+    // Handle client disconnect
+    req.on('close', () => {
+      console.log('Client disconnected, closing stream');
+      response.data.destroy();
+    });
+
   } catch (error) {
-    console.error('Chat error:', error);
-    res.write(`data: ${JSON.stringify({ error: 'Failed to process message' })}\n\n`);
-    res.end();
+    console.error('Chat error:', error.message);
+    
+    // If headers already sent, we can't send JSON error
+    if (res.headersSent) {
+      res.write(`data: ${JSON.stringify({ 
+        error: 'Failed to process message',
+        content: "Sorry, I'm having technical difficulties. Please try again or contact me directly."
+      })}\n\n`);
+      res.end();
+      return;
+    }
+    
+    // Send proper error response
+    const status = error.response?.status || 500;
+    const message = error.response?.data?.detail || error.message || 'Chat service unavailable';
+    
+    res.status(status).json({ 
+      error: message,
+      session_id: session?.session_id
+    });
   }
 });
 
 // ADMIN API: Upload document
-router.post('/api/admin/documents', upload.single('file'), async (req, res) => {
+router.post('/api/admin/documents', async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
+    const { file_url, original_name, category, description, file_size, mime_type } = req.body;
+    
+    if (!file_url) {
+      return res.status(400).json({ error: 'file_url is required' });
     }
 
-    const { category = 'general', description = '' } = req.body;
-    
     // Validate category
     const validCategories = ['resume', 'certification', 'project', 'general'];
     if (!validCategories.includes(category)) {
-      await fs.unlink(req.file.path);
       return res.status(400).json({ error: 'Invalid category' });
     }
 
-    // Save to database
+    // Save to database with URL instead of local path
     const doc = await Document.create({
-      filename: req.file.filename,
-      original_name: req.file.originalname,
-      file_path: req.file.path,
-      file_size: req.file.size,
-      mime_type: req.file.mimetype,
+      filename: original_name, // Store original name
+      original_name: original_name,
+      file_path: file_url,     // Store Cloudinary URL here
+      file_size: file_size || 0,
+      mime_type: mime_type || 'application/pdf',
       category,
       description,
       vector_namespace: 'portfolio-knowledge'
     });
 
     // Trigger indexing in Python service (async)
+    // Now passing file_url instead of file_path
     setTimeout(async () => {
       try {
-        await axios.post(`${CHATBOT_SERVICE_URL}/index-document`, {
+        await axios.post(`${process.env.CHATBOT_SERVICE_URL || 'http://localhost:8000'}/index-document`, {
           document_id: doc.id,
-          file_path: doc.file_path,
+          file_url: doc.file_path,  // Python will download from this URL
           category: doc.category
         });
       } catch (err) {
@@ -182,13 +254,14 @@ router.post('/api/admin/documents', upload.single('file'), async (req, res) => {
       document: {
         id: doc.id,
         original_name: doc.original_name,
+        file_url: doc.file_path,
         category: doc.category,
         index_status: doc.index_status
       }
     });
 
   } catch (error) {
-    console.error('Upload error:', error);
+    console.error('Document creation error:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -212,16 +285,25 @@ router.delete('/api/admin/documents/:id', async (req, res) => {
       return res.status(404).json({ error: 'Document not found' });
     }
 
-    // Delete file
-    try {
-      await fs.unlink(doc.file_path);
-    } catch (e) {
-      console.log('File already deleted or not found');
+    // Delete from Cloudinary if it's a Cloudinary URL
+    if (doc.file_path && doc.file_path.includes('cloudinary.com')) {
+      try {
+        // Extract public_id from URL
+        // URL format: https://res.cloudinary.com/cloud_name/image/upload/v1234/folder/filename.pdf
+        const urlParts = doc.file_path.split('/');
+        const filenameWithExt = urlParts[urlParts.length - 1];
+        const folder = urlParts[urlParts.length - 2];
+        const publicId = `${folder}/${filenameWithExt.split('.')[0]}`;
+        
+        await req.app.locals.cloudinary.uploader.destroy(publicId);
+      } catch (cloudErr) {
+        console.log('Cloudinary deletion error (non-critical):', cloudErr.message);
+      }
     }
 
     // Delete vectors from Pinecone
     try {
-      await axios.delete(`${CHATBOT_SERVICE_URL}/delete-document/${doc.id}`);
+      await axios.delete(`${process.env.CHATBOT_SERVICE_URL || 'http://localhost:8000'}/delete-document/${doc.id}`);
     } catch (e) {
       console.log('Vector deletion error:', e.message);
     }
@@ -284,6 +366,53 @@ router.put('/api/admin/chat-settings', async (req, res) => {
 
     await Settings.setMultiple(updates);
     res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/api/admin/upload-signature', async (req, res) => {
+  try {
+    const timestamp = Math.round((new Date).getTime() / 1000);
+    
+    // Generate signature for unsigned upload preset or specific folder
+    const signature = req.app.locals.cloudinary.utils.api_sign_request({
+      timestamp: timestamp,
+      folder: 'portfolio-knowledge',
+      resource_type: 'auto'
+    }, process.env.CLOUDINARY_API_SECRET);
+
+    res.json({
+      signature,
+      timestamp,
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      folder: 'portfolio-knowledge'
+    });
+  } catch (error) {
+    console.error('Signature generation error:', error);
+    res.status(500).json({ error: 'Failed to generate upload signature' });
+  }
+});
+
+// Simple non-streaming chat for testing
+router.post('/api/chat-simple', checkEnabled, async (req, res) => {
+  try {
+    const { message } = req.body;
+    
+    const response = await axios.post(`${CHATBOT_SERVICE_URL}/chat`, {
+      message,
+      session_id: 'test-session',
+      history: [],
+      fetch_projects: true
+    }, {
+      timeout: 30000,
+      responseType: 'json' // Note: your Python returns SSE, so this won't work directly
+    });
+    
+    // Actually, better to just proxy or use a different approach
+    res.json({ status: 'Use the streaming endpoint /api/chat' });
+    
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

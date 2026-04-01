@@ -1719,7 +1719,7 @@ button {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--secondary-foreground);
-  transition: all 0.2s ease;
+  transition: all 1s ease;
 }
 
 .project-tag:hover {

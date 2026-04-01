@@ -3,6 +3,8 @@ const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require('method-override');
 require('dotenv').config();
+const cookieParser = require('cookie-parser');
+const cloudinary = require('cloudinary').v2;
 
 const routes = require('./routes');
 
@@ -16,6 +18,14 @@ app.use(expressLayouts);
 app.set('layout', 'layout');
 
 // Middleware
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true
+});
+
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -35,6 +45,8 @@ app.use(async (req, res, next) => {
     next();
   }
 });
+
+app.locals.cloudinary = cloudinary;
 
 // Routes
 app.use('/', routes);

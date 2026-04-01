@@ -2,7 +2,7 @@
   position: relative;
   min-height: 220px;
   max-height: 400px;
-  font-family: 'JetBrains Mono', 'Geist Mono', 'SF Mono', Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.8125rem;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.9);
