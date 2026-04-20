@@ -1,66 +1,45 @@
-let pythonServiceHealthy = true;
-let lastHealthCheck = 0;
-const HEALTH_CHECK_INTERVAL = 30000;
+/**
+ * Chatbot Routes - Now using local Node.js service
+ * No more Python service proxy - everything runs in Node.js
+ */
 
 const express = require('express');
 const router = express.Router();
-const path = require('path');
-const fs = require('fs').promises;
 const { Document, Chat, Settings } = require('../models');
 const axios = require('axios');
 const rateLimit = require('express-rate-limit');
 
+// Import the local chatbot service
+const chatbotService = require('../services/chatbot');
+
+// Rate limiting
 const chatRateLimit = rateLimit({
   windowMs: 1 * 60 * 1000,
   max: 10,
   message: { error: 'Too many messages. Please slow down.' },
 });
 
-async function checkPythonHealth() {
-  const now = Date.now();
-  if (now - lastHealthCheck < HEALTH_CHECK_INTERVAL) {
-    return pythonServiceHealthy;
-  }
-  
-  try {
-    await axios.get(`${CHATBOT_SERVICE_URL}/health`, { timeout: 100000 });
-    pythonServiceHealthy = true;
-    lastHealthCheck = now;
-    return true;
-  } catch (error) {
-    pythonServiceHealthy = false;
-    lastHealthCheck = now;
-    console.error('Python service health check failed:', error.message);
-    return false;
-  }
-}
-
+// Check if chatbot is enabled
 const checkEnabled = async (req, res, next) => {
-  const enabled = await Settings.get('chatbot_enabled');
-  if (enabled !== 'true') {
-    return res.status(503).json({ error: 'Chatbot temporarily disabled' });
+  try {
+    const enabled = await Settings.get('chatbot_enabled');
+    if (enabled !== 'true') {
+      return res.status(503).json({ error: 'Chatbot temporarily disabled' });
+    }
+    next();
+  } catch (error) {
+    console.error('Settings check error:', error);
+    next(); // Continue anyway if settings fail
   }
-  
-  // Check if Python service is up
-  const healthy = await checkPythonHealth();
-  if (!healthy) {
-    return res.status(503).json({ 
-      error: 'AI service temporarily unavailable. Please try again in a moment.' 
-    });
-  }
-  
-  next();
 };
 
-const CHATBOT_SERVICE_URL = process.env.CHATBOT_SERVICE_URL || 'http://localhost:8000';
-
 // PUBLIC API: Chat streaming endpoint
-router.post('/api/chat', chatRateLimit,checkEnabled, async (req, res) => {
+router.post('/api/chat', chatRateLimit, checkEnabled, async (req, res) => {
   let session;
-  
+
   try {
     const { message, session_id, history = [] } = req.body;
-    
+
     if (!message) {
       return res.status(400).json({ error: 'Message required' });
     }
@@ -84,124 +63,61 @@ router.post('/api/chat', chatRateLimit,checkEnabled, async (req, res) => {
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
-    res.setHeader('X-Accel-Buffering', 'no'); // Disable nginx buffering
+    res.setHeader('X-Accel-Buffering', 'no');
 
     // Check if query needs project data
     const needsProjects = /project|built|portfolio|github|experience|work|axiora|app|what.*built|showcase/i.test(message);
 
-    // Stream from Python service with timeout
-    const response = await axios.post(`${CHATBOT_SERVICE_URL}/chat`, {
-      message,
-      session_id: session.session_id,
-      history,
-      fetch_projects: needsProjects
-    }, {
-      responseType: 'stream',
-      timeout: 30000, // 30 second timeout
-      headers: {
-        'Accept': 'text/event-stream',
-        'Cache-Control': 'no-cache'
-      }
-    });
-
+    // Stream from local service
     let fullResponse = '';
     let sources = [];
-    let hasReceivedData = false;
 
-    // Handle stream with proper error boundaries
-    response.data.on('data', (chunk) => {
-      try {
-        hasReceivedData = true;
-        const lines = chunk.toString().split('\n');
-        
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const jsonStr = line.slice(6).trim();
-            if (!jsonStr) continue;
-            
-            try {
-              const data = JSON.parse(jsonStr);
-              
-              if (data.content) {
-                fullResponse += data.content;
-                res.write(`data: ${JSON.stringify(data)}\n\n`);
-              }
-              
-              if (data.sources) {
-                sources = data.sources;
-              }
-              
-              if (data.done) {
-                // Store complete response
-                Chat.addMessage(session.session_id, 'assistant', fullResponse, {
-                  sources,
-                  timestamp: new Date().toISOString(),
-                  metadata: data.meta || {}
-                }).catch(err => console.error('Failed to store message:', err));
-              }
-              
-              if (data.error) {
-                console.error('Stream error from Python:', data.error);
-                res.write(`data: ${JSON.stringify({ error: data.error })}\n\n`);
-              }
-            } catch (parseError) {
-              // Ignore malformed JSON lines
-              console.debug('Parse error for line:', jsonStr.substring(0, 100));
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Stream processing error:', error);
+    const stream = chatbotService.streamChat(message, history, needsProjects);
+
+    for await (const data of stream) {
+      if (data.content) {
+        fullResponse += data.content;
+        res.write(`data: ${JSON.stringify({ content: data.content })}\n\n`);
       }
-    });
+      if (data.sources) {
+        sources = data.sources;
+      }
+      if (data.done) {
+        // Store complete response
+        await Chat.addMessage(session.session_id, 'assistant', fullResponse, {
+          sources,
+          timestamp: new Date().toISOString(),
+          metadata: data.meta || {}
+        });
 
-    response.data.on('end', () => {
-      if (!hasReceivedData) {
-        // No data received - Python service issue
-        res.write(`data: ${JSON.stringify({ 
-          error: 'No response from AI service',
-          content: "I'm having trouble connecting to my knowledge base. Please try again or email me at thobejanetheo@gmail.com"
+        res.write(`data: ${JSON.stringify({
+          session_id: session.session_id,
+          done: true,
+          sources,
+          meta: data.meta
         })}\n\n`);
       }
-      
-      res.write(`data: ${JSON.stringify({ session_id: session.session_id, done: true })}\n\n`);
-      res.end();
-    });
+      if (data.error) {
+        res.write(`data: ${JSON.stringify({ error: data.error })}\n\n`);
+      }
+    }
 
-    response.data.on('error', (err) => {
-      console.error('Stream error:', err.message);
-      res.write(`data: ${JSON.stringify({ 
-        error: 'Stream interrupted',
-        content: "Connection interrupted. Please try again."
-      })}\n\n`);
-      res.end();
-    });
-
-    // Handle client disconnect
-    req.on('close', () => {
-      console.log('Client disconnected, closing stream');
-      response.data.destroy();
-    });
+    res.end();
 
   } catch (error) {
     console.error('Chat error:', error.message);
-    
-    // If headers already sent, we can't send JSON error
+
     if (res.headersSent) {
-      res.write(`data: ${JSON.stringify({ 
+      res.write(`data: ${JSON.stringify({
         error: 'Failed to process message',
         content: "Sorry, I'm having technical difficulties. Please try again or contact me directly."
       })}\n\n`);
       res.end();
       return;
     }
-    
-    // Send proper error response
-    const status = error.response?.status || 500;
-    const message = error.response?.data?.detail || error.message || 'Chat service unavailable';
-    
-    res.status(status).json({ 
-      error: message,
+
+    res.status(500).json({
+      error: error.message || 'Chat service unavailable',
       session_id: session?.session_id
     });
   }
@@ -211,7 +127,7 @@ router.post('/api/chat', chatRateLimit,checkEnabled, async (req, res) => {
 router.post('/api/admin/documents', async (req, res) => {
   try {
     const { file_url, original_name, category, description, file_size, mime_type } = req.body;
-    
+
     if (!file_url) {
       return res.status(400).json({ error: 'file_url is required' });
     }
@@ -222,11 +138,11 @@ router.post('/api/admin/documents', async (req, res) => {
       return res.status(400).json({ error: 'Invalid category' });
     }
 
-    // Save to database with URL instead of local path
+    // Save to database
     const doc = await Document.create({
-      filename: original_name, // Store original name
+      filename: original_name,
       original_name: original_name,
-      file_path: file_url,     // Store Cloudinary URL here
+      file_path: file_url,
       file_size: file_size || 0,
       mime_type: mime_type || 'application/pdf',
       category,
@@ -234,15 +150,11 @@ router.post('/api/admin/documents', async (req, res) => {
       vector_namespace: 'portfolio-knowledge'
     });
 
-    // Trigger indexing in Python service (async)
-    // Now passing file_url instead of file_path
+    // Trigger indexing asynchronously
     setTimeout(async () => {
       try {
-        await axios.post(`${process.env.CHATBOT_SERVICE_URL || 'http://localhost:8000'}/index-document`, {
-          document_id: doc.id,
-          file_url: doc.file_path,  // Python will download from this URL
-          category: doc.category
-        });
+        await chatbotService.indexDocument(doc.id, doc.file_path, doc.category);
+        await Document.updateIndexStatus(doc.id, 'indexed');
       } catch (err) {
         console.error('Indexing error:', err);
         await Document.updateIndexStatus(doc.id, 'error');
@@ -256,7 +168,7 @@ router.post('/api/admin/documents', async (req, res) => {
         original_name: doc.original_name,
         file_url: doc.file_path,
         category: doc.category,
-        index_status: doc.index_status
+        index_status: 'pending'
       }
     });
 
@@ -288,13 +200,11 @@ router.delete('/api/admin/documents/:id', async (req, res) => {
     // Delete from Cloudinary if it's a Cloudinary URL
     if (doc.file_path && doc.file_path.includes('cloudinary.com')) {
       try {
-        // Extract public_id from URL
-        // URL format: https://res.cloudinary.com/cloud_name/image/upload/v1234/folder/filename.pdf
         const urlParts = doc.file_path.split('/');
         const filenameWithExt = urlParts[urlParts.length - 1];
         const folder = urlParts[urlParts.length - 2];
         const publicId = `${folder}/${filenameWithExt.split('.')[0]}`;
-        
+
         await req.app.locals.cloudinary.uploader.destroy(publicId);
       } catch (cloudErr) {
         console.log('Cloudinary deletion error (non-critical):', cloudErr.message);
@@ -303,7 +213,7 @@ router.delete('/api/admin/documents/:id', async (req, res) => {
 
     // Delete vectors from Pinecone
     try {
-      await axios.delete(`${process.env.CHATBOT_SERVICE_URL || 'http://localhost:8000'}/delete-document/${doc.id}`);
+      await chatbotService.deleteDocumentVectors(doc.id);
     } catch (e) {
       console.log('Vector deletion error:', e.message);
     }
@@ -312,6 +222,7 @@ router.delete('/api/admin/documents/:id', async (req, res) => {
     await Document.delete(req.params.id);
 
     res.json({ success: true });
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -371,6 +282,7 @@ router.put('/api/admin/chat-settings', async (req, res) => {
   }
 });
 
+// ADMIN API: Get Cloudinary upload signature
 router.get('/api/admin/upload-signature', async (req, res) => {
   console.log('DEBUG ENV:', {
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? 'EXISTS' : 'MISSING',
@@ -379,8 +291,7 @@ router.get('/api/admin/upload-signature', async (req, res) => {
   });
   try {
     const timestamp = Math.round((new Date).getTime() / 1000);
-    
-    // Generate signature for unsigned upload preset or specific folder
+
     const signature = req.app.locals.cloudinary.utils.api_sign_request({
       timestamp: timestamp,
       folder: 'portfolio-knowledge'
@@ -399,41 +310,31 @@ router.get('/api/admin/upload-signature', async (req, res) => {
   }
 });
 
-// Simple non-streaming chat for testing
-router.post('/api/chat-simple', checkEnabled, async (req, res) => {
-  try {
-    const { message } = req.body;
-    
-    const response = await axios.post(`${CHATBOT_SERVICE_URL}/chat`, {
-      message,
-      session_id: 'test-session',
-      history: [],
-      fetch_projects: true
-    }, {
-      timeout: 30000,
-      responseType: 'json' // Note: your Python returns SSE, so this won't work directly.
-    });
-    
-    // Actually, better to just proxy or use a different approach
-    res.json({ status: 'Use the streaming endpoint /api/chat' });
-    
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 // PUBLIC API: Get chatbot config (for frontend)
 router.get('/api/chat-config', async (req, res) => {
   try {
     const enabled = await Settings.get('chatbot_enabled');
     const welcomeMessage = await Settings.get('chatbot_welcome_message');
-    
+
     res.json({
       enabled: enabled === 'true',
       welcome_message: welcomeMessage || 'Hi! Ask me anything about Theophilus.'
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// Health check endpoint
+router.get('/api/health', async (req, res) => {
+  try {
+    const status = await chatbotService.healthCheck();
+    res.json(status);
+  } catch (error) {
+    res.status(500).json({
+      status: 'unhealthy',
+      error: error.message
+    });
   }
 });
 

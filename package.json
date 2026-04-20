@@ -19,6 +19,7 @@
   "author": "Theophilus",
   "license": "MIT",
   "dependencies": {
+    "@pinecone-database/pinecone": "^5.1.1",
     "axios": "^1.14.0",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.9.0",
@@ -30,6 +31,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-rate-limit": "^8.3.2",
     "express-validator": "^7.3.1",
+    "groq-sdk": "^0.15.0",
     "method-override": "^3.0.0",
     "multer": "^2.1.1",
     "pg": "^8.11.3"
