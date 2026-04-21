@@ -327,10 +327,9 @@ async function indexDocument(documentId, fileUrl, category) {
     const isText = fileUrl.toLowerCase().match(/\.(txt|md|json)$/);
 
     if (isPDF) {
-      // For PDFs in serverless environment, we'd need a PDF parser
-      // Since pdf-parse has issues in serverless, use a simpler approach
-      // or implement text extraction via external service
-      throw new Error('PDF parsing requires additional setup. Consider using a PDF extraction service or pre-extracting text.');
+      const pdfParse = require('pdf-parse');
+      const parsed = await pdfParse(Buffer.from(response.data));
+      text = parsed.text;
     } else if (isText) {
       text = response.data.toString('utf-8');
     } else {
