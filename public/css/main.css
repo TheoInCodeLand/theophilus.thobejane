@@ -4179,3 +4179,441 @@ input[type="checkbox"] {
     width: 100%;
   }
 }
+
+/* ============================================================
+   PROJECT CARD — CLICKABLE
+   ============================================================ */
+.project-card-clickable {
+  cursor: pointer;
+}
+
+.project-card-clickable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px var(--glow-color-strong);
+}
+
+.project-card-clickable:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.project-link-detail {
+  color: var(--primary) !important;
+  font-weight: 500;
+}
+
+.project-link-detail svg {
+  stroke: var(--primary);
+}
+
+/* ============================================================
+   PROJECT DETAIL PAGE
+   ============================================================ */
+.project-detail-section {
+  padding: 6rem 0 4rem;
+  min-height: 100vh;
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  text-decoration: none;
+  margin-bottom: 2.5rem;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.back-link svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--primary);
+  gap: 0.75rem;
+}
+
+.back-link:hover svg {
+  transform: translateX(-3px);
+}
+
+/* Header */
+.pd-header {
+  margin-bottom: 3rem;
+  max-width: 720px;
+}
+
+.pd-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.pd-year {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+  background: var(--secondary);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+.pd-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--foreground) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pd-description {
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.pd-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pd-live-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pd-live-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Main grid */
+.pd-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .pd-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cards */
+.pd-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pd-card:hover {
+  border-color: oklch(from var(--primary) l c h / 0.4);
+  box-shadow: 0 4px 20px var(--glow-color);
+}
+
+.pd-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.pd-card-header h2,
+.pd-card-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.pd-card-icon {
+  width: 32px;
+  height: 32px;
+  background: oklch(from var(--primary) l c h / 0.1);
+  border: 1px solid oklch(from var(--primary) l c h / 0.25);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pd-card-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--primary);
+}
+
+.pd-card-body {
+  padding: 1.5rem;
+}
+
+.pd-long-desc {
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+/* Tech Stack Terminal Card */
+.pd-tech-card {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.pd-tech-card .terminal-dots {
+  padding: 0.75rem 1rem;
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pd-tech-card .terminal-title {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  border-bottom: 1px solid var(--border);
+}
+
+.pd-terminal-body {
+  padding: 1.25rem 1.5rem;
+  line-height: 2;
+}
+
+.pd-terminal-body p {
+  margin: 0;
+}
+
+/* Stats Sidebar Card */
+.pd-stats-body {
+  padding: 0.5rem 0;
+}
+
+.pd-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.pd-stat-row:last-child {
+  border-bottom: none;
+}
+
+.pd-stat-row:hover {
+  background: var(--secondary);
+}
+
+.pd-stat-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+.pd-stat-label svg {
+  width: 14px;
+  height: 14px;
+}
+
+.pd-stat-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+}
+
+.pd-stat-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+
+/* Tags Cloud */
+.pd-tags-cloud {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pd-tag-chip {
+  font-size: 0.8rem;
+}
+
+/* Links List */
+.pd-links-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.pd-link-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: var(--foreground);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.pd-link-item:last-child {
+  border-bottom: none;
+}
+
+.pd-link-item:hover {
+  background: var(--secondary);
+}
+
+.pd-link-item > svg:first-child {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+
+.pd-link-live > svg:first-child {
+  stroke: var(--primary);
+}
+
+.pd-link-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.pd-link-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.pd-link-url {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pd-link-arrow {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.pd-link-item:hover .pd-link-arrow {
+  transform: translateX(3px);
+  color: var(--primary);
+}
+
+.pd-no-links {
+  padding: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+/* Bottom CTA */
+.pd-bottom-cta {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+}
+
+.pd-cta-inner {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.pd-cta-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, var(--glow-color) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.pd-cta-inner .terminal-dots {
+  padding: 0.75rem 1rem;
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pd-cta-content {
+  padding: 2.5rem;
+  position: relative;
+}
+
+.pd-cta-content .terminal-comment {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  margin-bottom: 0.75rem;
+}
+
+.pd-cta-content h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--foreground) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pd-cta-content > p {
+  color: var(--muted-foreground);
+  margin-bottom: 1.75rem;
+}
+
+.pd-cta-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .pd-cta-actions {
+    flex-direction: column;
+  }
+
+  .pd-cta-actions a {
+    width: 100%;
+    justify-content: center;
+  }
+}
