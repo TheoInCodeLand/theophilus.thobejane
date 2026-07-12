@@ -20,87 +20,276 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 
 const themes = {
+  // ── NEUTRALS ──────────────────────────────────────────────
+  obsidian: {
+    light: {
+      primary: "oklch(0.30 0.005 260)",
+      accent:  "oklch(0.30 0.005 260)",
+      ring:    "oklch(0.30 0.005 260)",
+      "glow-color":        "oklch(0.30 0.005 260 / 0.12)",
+      "glow-color-strong": "oklch(0.30 0.005 260 / 0.22)"
+    },
+    dark: {
+      primary: "oklch(0.85 0.004 260)",
+      accent:  "oklch(0.85 0.004 260)",
+      ring:    "oklch(0.85 0.004 260)",
+      "glow-color":        "oklch(0.85 0.004 260 / 0.10)",
+      "glow-color-strong": "oklch(0.85 0.004 260 / 0.18)"
+    }
+  },
+  chalk: {
+    light: {
+      primary: "oklch(0.96 0.002 90)",
+      accent:  "oklch(0.96 0.002 90)",
+      ring:    "oklch(0.96 0.002 90)",
+      "glow-color":        "oklch(0.96 0.002 90 / 0.15)",
+      "glow-color-strong": "oklch(0.96 0.002 90 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.97 0.002 90)",
+      accent:  "oklch(0.97 0.002 90)",
+      ring:    "oklch(0.97 0.002 90)",
+      "glow-color":        "oklch(0.97 0.002 90 / 0.08)",
+      "glow-color-strong": "oklch(0.97 0.002 90 / 0.14)"
+    }
+  },
+  // ── ORIGINALS ─────────────────────────────────────────────
+  emerald: {
+    light: {
+      primary: "oklch(0.68 0.17 160)",
+      accent:  "oklch(0.68 0.17 160)",
+      ring:    "oklch(0.68 0.17 160)",
+      "glow-color":        "oklch(0.68 0.17 160 / 0.15)",
+      "glow-color-strong": "oklch(0.68 0.17 160 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.72 0.16 165)",
+      accent:  "oklch(0.72 0.16 165)",
+      ring:    "oklch(0.72 0.16 165)",
+      "glow-color":        "oklch(0.72 0.16 165 / 0.12)",
+      "glow-color-strong": "oklch(0.72 0.16 165 / 0.22)"
+    }
+  },
   golden: {
     light: {
       primary: "oklch(0.75 0.15 80)",
-      accent: "oklch(0.75 0.15 80)",
-      ring: "oklch(0.75 0.15 80)",
-      "glow-color": "oklch(0.75 0.15 80 / 0.15)",
+      accent:  "oklch(0.75 0.15 80)",
+      ring:    "oklch(0.75 0.15 80)",
+      "glow-color":        "oklch(0.75 0.15 80 / 0.15)",
       "glow-color-strong": "oklch(0.75 0.15 80 / 0.25)"
     },
     dark: {
       primary: "oklch(0.78 0.14 85)",
-      accent: "oklch(0.78 0.14 85)",
-      ring: "oklch(0.78 0.14 85)",
-      "glow-color": "oklch(0.78 0.14 85 / 0.12)",
+      accent:  "oklch(0.78 0.14 85)",
+      ring:    "oklch(0.78 0.14 85)",
+      "glow-color":        "oklch(0.78 0.14 85 / 0.12)",
       "glow-color-strong": "oklch(0.78 0.14 85 / 0.22)"
     }
   },
   cyan: {
     light: {
       primary: "oklch(0.72 0.15 195)",
-      accent: "oklch(0.72 0.15 195)",
-      ring: "oklch(0.72 0.15 195)",
-      "glow-color": "oklch(0.72 0.15 195 / 0.15)",
+      accent:  "oklch(0.72 0.15 195)",
+      ring:    "oklch(0.72 0.15 195)",
+      "glow-color":        "oklch(0.72 0.15 195 / 0.15)",
       "glow-color-strong": "oklch(0.72 0.15 195 / 0.25)"
     },
     dark: {
       primary: "oklch(0.75 0.14 200)",
-      accent: "oklch(0.75 0.14 200)",
-      ring: "oklch(0.75 0.14 200)",
-      "glow-color": "oklch(0.75 0.14 200 / 0.12)",
+      accent:  "oklch(0.75 0.14 200)",
+      ring:    "oklch(0.75 0.14 200)",
+      "glow-color":        "oklch(0.75 0.14 200 / 0.12)",
       "glow-color-strong": "oklch(0.75 0.14 200 / 0.22)"
     }
   },
   purple: {
     light: {
       primary: "oklch(0.65 0.22 290)",
-      accent: "oklch(0.65 0.22 290)",
-      ring: "oklch(0.65 0.22 290)",
-      "glow-color": "oklch(0.65 0.22 290 / 0.15)",
+      accent:  "oklch(0.65 0.22 290)",
+      ring:    "oklch(0.65 0.22 290)",
+      "glow-color":        "oklch(0.65 0.22 290 / 0.15)",
       "glow-color-strong": "oklch(0.65 0.22 290 / 0.25)"
     },
     dark: {
       primary: "oklch(0.70 0.20 295)",
-      accent: "oklch(0.70 0.20 295)",
-      ring: "oklch(0.70 0.20 295)",
-      "glow-color": "oklch(0.70 0.20 295 / 0.12)",
+      accent:  "oklch(0.70 0.20 295)",
+      ring:    "oklch(0.70 0.20 295)",
+      "glow-color":        "oklch(0.70 0.20 295 / 0.12)",
       "glow-color-strong": "oklch(0.70 0.20 295 / 0.22)"
-    }
-  },
-  emerald: {
-    light: {
-      primary: "oklch(0.68 0.17 160)",
-      accent: "oklch(0.68 0.17 160)",
-      ring: "oklch(0.68 0.17 160)",
-      "glow-color": "oklch(0.68 0.17 160 / 0.15)",
-      "glow-color-strong": "oklch(0.68 0.17 160 / 0.25)"
-    },
-    dark: {
-      primary: "oklch(0.72 0.16 165)",
-      accent: "oklch(0.72 0.16 165)",
-      ring: "oklch(0.72 0.16 165)",
-      "glow-color": "oklch(0.72 0.16 165 / 0.12)",
-      "glow-color-strong": "oklch(0.72 0.16 165 / 0.22)"
     }
   },
   rose: {
     light: {
       primary: "oklch(0.65 0.20 15)",
-      accent: "oklch(0.65 0.20 15)",
-      ring: "oklch(0.65 0.20 15)",
-      "glow-color": "oklch(0.65 0.20 15 / 0.15)",
+      accent:  "oklch(0.65 0.20 15)",
+      ring:    "oklch(0.65 0.20 15)",
+      "glow-color":        "oklch(0.65 0.20 15 / 0.15)",
       "glow-color-strong": "oklch(0.65 0.20 15 / 0.25)"
     },
     dark: {
       primary: "oklch(0.70 0.18 20)",
-      accent: "oklch(0.70 0.18 20)",
-      ring: "oklch(0.70 0.18 20)",
-      "glow-color": "oklch(0.70 0.18 20 / 0.12)",
+      accent:  "oklch(0.70 0.18 20)",
+      ring:    "oklch(0.70 0.18 20)",
+      "glow-color":        "oklch(0.70 0.18 20 / 0.12)",
       "glow-color-strong": "oklch(0.70 0.18 20 / 0.22)"
+    }
+  },
+  // ── INDUSTRY ──────────────────────────────────────────────
+  // Firebase / Vercel orange-ish
+  firebase: {
+    light: {
+      primary: "oklch(0.72 0.19 48)",
+      accent:  "oklch(0.72 0.19 48)",
+      ring:    "oklch(0.72 0.19 48)",
+      "glow-color":        "oklch(0.72 0.19 48 / 0.15)",
+      "glow-color-strong": "oklch(0.72 0.19 48 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.76 0.18 50)",
+      accent:  "oklch(0.76 0.18 50)",
+      ring:    "oklch(0.76 0.18 50)",
+      "glow-color":        "oklch(0.76 0.18 50 / 0.12)",
+      "glow-color-strong": "oklch(0.76 0.18 50 / 0.22)"
+    }
+  },
+  // GitHub / Primer indigo
+  github: {
+    light: {
+      primary: "oklch(0.55 0.22 265)",
+      accent:  "oklch(0.55 0.22 265)",
+      ring:    "oklch(0.55 0.22 265)",
+      "glow-color":        "oklch(0.55 0.22 265 / 0.15)",
+      "glow-color-strong": "oklch(0.55 0.22 265 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.68 0.20 260)",
+      accent:  "oklch(0.68 0.20 260)",
+      ring:    "oklch(0.68 0.20 260)",
+      "glow-color":        "oklch(0.68 0.20 260 / 0.12)",
+      "glow-color-strong": "oklch(0.68 0.20 260 / 0.22)"
+    }
+  },
+  // Stripe violet
+  stripe: {
+    light: {
+      primary: "oklch(0.55 0.25 305)",
+      accent:  "oklch(0.55 0.25 305)",
+      ring:    "oklch(0.55 0.25 305)",
+      "glow-color":        "oklch(0.55 0.25 305 / 0.15)",
+      "glow-color-strong": "oklch(0.55 0.25 305 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.68 0.22 305)",
+      accent:  "oklch(0.68 0.22 305)",
+      ring:    "oklch(0.68 0.22 305)",
+      "glow-color":        "oklch(0.68 0.22 305 / 0.12)",
+      "glow-color-strong": "oklch(0.68 0.22 305 / 0.22)"
+    }
+  },
+  // VS Code / Microsoft blue
+  vscode: {
+    light: {
+      primary: "oklch(0.58 0.20 240)",
+      accent:  "oklch(0.58 0.20 240)",
+      ring:    "oklch(0.58 0.20 240)",
+      "glow-color":        "oklch(0.58 0.20 240 / 0.15)",
+      "glow-color-strong": "oklch(0.58 0.20 240 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.68 0.18 235)",
+      accent:  "oklch(0.68 0.18 235)",
+      ring:    "oklch(0.68 0.18 235)",
+      "glow-color":        "oklch(0.68 0.18 235 / 0.12)",
+      "glow-color-strong": "oklch(0.68 0.18 235 / 0.22)"
+    }
+  },
+  // Google / YouTube red
+  google: {
+    light: {
+      primary: "oklch(0.58 0.24 28)",
+      accent:  "oklch(0.58 0.24 28)",
+      ring:    "oklch(0.58 0.24 28)",
+      "glow-color":        "oklch(0.58 0.24 28 / 0.15)",
+      "glow-color-strong": "oklch(0.58 0.24 28 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.68 0.22 28)",
+      accent:  "oklch(0.68 0.22 28)",
+      ring:    "oklch(0.68 0.22 28)",
+      "glow-color":        "oklch(0.68 0.22 28 / 0.12)",
+      "glow-color-strong": "oklch(0.68 0.22 28 / 0.22)"
+    }
+  },
+  // MongoDB / Figma teal/green
+  mongodb: {
+    light: {
+      primary: "oklch(0.62 0.18 172)",
+      accent:  "oklch(0.62 0.18 172)",
+      ring:    "oklch(0.62 0.18 172)",
+      "glow-color":        "oklch(0.62 0.18 172 / 0.15)",
+      "glow-color-strong": "oklch(0.62 0.18 172 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.70 0.17 175)",
+      accent:  "oklch(0.70 0.17 175)",
+      ring:    "oklch(0.70 0.17 175)",
+      "glow-color":        "oklch(0.70 0.17 175 / 0.12)",
+      "glow-color-strong": "oklch(0.70 0.17 175 / 0.22)"
+    }
+  },
+  // Figma / Design pink
+  figma: {
+    light: {
+      primary: "oklch(0.62 0.22 340)",
+      accent:  "oklch(0.62 0.22 340)",
+      ring:    "oklch(0.62 0.22 340)",
+      "glow-color":        "oklch(0.62 0.22 340 / 0.15)",
+      "glow-color-strong": "oklch(0.62 0.22 340 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.72 0.20 340)",
+      accent:  "oklch(0.72 0.20 340)",
+      ring:    "oklch(0.72 0.20 340)",
+      "glow-color":        "oklch(0.72 0.20 340 / 0.12)",
+      "glow-color-strong": "oklch(0.72 0.20 340 / 0.22)"
+    }
+  },
+  // AWS / Amber
+  aws: {
+    light: {
+      primary: "oklch(0.76 0.17 65)",
+      accent:  "oklch(0.76 0.17 65)",
+      ring:    "oklch(0.76 0.17 65)",
+      "glow-color":        "oklch(0.76 0.17 65 / 0.15)",
+      "glow-color-strong": "oklch(0.76 0.17 65 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.80 0.16 65)",
+      accent:  "oklch(0.80 0.16 65)",
+      ring:    "oklch(0.80 0.16 65)",
+      "glow-color":        "oklch(0.80 0.16 65 / 0.12)",
+      "glow-color-strong": "oklch(0.80 0.16 65 / 0.22)"
+    }
+  },
+  // Vercel slate
+  vercel: {
+    light: {
+      primary: "oklch(0.45 0.02 260)",
+      accent:  "oklch(0.45 0.02 260)",
+      ring:    "oklch(0.45 0.02 260)",
+      "glow-color":        "oklch(0.45 0.02 260 / 0.15)",
+      "glow-color-strong": "oklch(0.45 0.02 260 / 0.25)"
+    },
+    dark: {
+      primary: "oklch(0.72 0.02 260)",
+      accent:  "oklch(0.72 0.02 260)",
+      ring:    "oklch(0.72 0.02 260)",
+      "glow-color":        "oklch(0.72 0.02 260 / 0.10)",
+      "glow-color-strong": "oklch(0.72 0.02 260 / 0.18)"
     }
   }
 };
+
 
 function initThemeToggle() {
   const darkModeToggle = document.getElementById('darkModeToggle');

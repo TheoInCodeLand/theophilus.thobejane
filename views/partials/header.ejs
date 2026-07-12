@@ -43,40 +43,120 @@
             <div class="theme-dropdown-backdrop" id="themeDropdownBackdrop" style="position: fixed; inset: 0; z-index: 40; display: none;"></div>
             
             <!-- Theme Dropdown -->
-            <div class="theme-dropdown" id="themeDropdown" style="position: absolute; right: 0; top: 48px; z-index: 50; width: 192px; border-radius: 8px; border: 1px solid var(--border); background: oklch(from var(--card) l c h / 0.95); backdrop-filter: blur(20px); box-shadow: 0 16px 48px oklch(0 0 0 / 0.2); padding: 0.75rem; display: none;">
-              <div style="margin-bottom: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground);">Select Theme</div>
-              <div style="display: flex; flex-direction: column; gap: 0.375rem;">
-                <button class="theme-option" data-theme="golden" style="display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.625rem 0.75rem; border-radius: 8px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.2s ease;">
-                  <div style="height: 20px; width: 20px; border-radius: 9999px; border: 2px solid var(--border); background: linear-gradient(to bottom right, oklch(0.85 0.15 80), oklch(0.7 0.18 70));"></div>
-                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.875rem; color: var(--muted-foreground);">Golden</span>
+            <div class="theme-dropdown" id="themeDropdown" style="position: absolute; right: 0; top: 48px; z-index: 50; width: 220px; border-radius: 10px; border: 1px solid var(--border); background: oklch(from var(--card) l c h / 0.97); backdrop-filter: blur(20px); box-shadow: 0 16px 48px oklch(0 0 0 / 0.25); padding: 0.625rem; display: none;">
+              <div style="margin-bottom: 0.5rem; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-foreground); padding: 0 0.25rem;">Select Theme</div>
+
+              <!-- Scrollable list -->
+              <div style="display: flex; flex-direction: column; gap: 0.25rem; max-height: 340px; overflow-y: auto; scrollbar-width: thin; padding-right: 2px;">
+
+                <!-- ── NEUTRALS ── -->
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-foreground); padding: 0.35rem 0.5rem 0.1rem; opacity: 0.6;">Neutrals</div>
+
+                <button class="theme-option" data-theme="obsidian" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #1a1a1a, #0a0a0a); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Obsidian</span>
                   <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
                 </button>
-                
-                <button class="theme-option" data-theme="cyan" style="display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.625rem 0.75rem; border-radius: 8px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.2s ease;">
-                  <div style="height: 20px; width: 20px; border-radius: 9999px; border: 2px solid var(--border); background: linear-gradient(to bottom right, oklch(0.75 0.14 195), oklch(0.6 0.16 240));"></div>
-                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.875rem; color: var(--muted-foreground);">Cyan</span>
+
+                <button class="theme-option" data-theme="chalk" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #f5f5f5, #e8e8e8); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Chalk</span>
                   <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
                 </button>
-                
-                <button class="theme-option" data-theme="purple" style="display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.625rem 0.75rem; border-radius: 8px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.2s ease;">
-                  <div style="height: 20px; width: 20px; border-radius: 9999px; border: 2px solid var(--border); background: linear-gradient(to bottom right, oklch(0.7 0.2 290), oklch(0.6 0.22 280));"></div>
-                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.875rem; color: var(--muted-foreground);">Purple</span>
-                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
-                </button>
-                
-                <button class="theme-option active" data-theme="emerald" style="display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.625rem 0.75rem; border-radius: 8px; border: 1px solid oklch(from var(--primary) l c h / 0.5); background: oklch(from var(--primary) l c h / 0.1); cursor: pointer; transition: all 0.2s ease;">
-                  <div style="height: 20px; width: 20px; border-radius: 9999px; border: 2px solid var(--border); background: linear-gradient(to bottom right, oklch(0.72 0.16 160), oklch(0.6 0.18 150));"></div>
-                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.875rem; color: var(--foreground); font-weight: 500;">Emerald</span>
+
+                <!-- ── ORIGINALS ── -->
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-foreground); padding: 0.5rem 0.5rem 0.1rem; opacity: 0.6;">Originals</div>
+
+                <button class="theme-option active" data-theme="emerald" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid oklch(from var(--primary) l c h / 0.5); background: oklch(from var(--primary) l c h / 0.1); cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, oklch(0.72 0.16 160), oklch(0.6 0.18 150)); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--foreground); font-weight: 500;">Emerald</span>
                   <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: block;"></div>
                 </button>
-                
-                <button class="theme-option" data-theme="rose" style="display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.625rem 0.75rem; border-radius: 8px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.2s ease;">
-                  <div style="height: 20px; width: 20px; border-radius: 9999px; border: 2px solid var(--border); background: linear-gradient(to bottom right, oklch(0.7 0.18 20), oklch(0.65 0.2 350));"></div>
-                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.875rem; color: var(--muted-foreground);">Rose</span>
+
+                <button class="theme-option" data-theme="golden" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, oklch(0.85 0.15 80), oklch(0.7 0.18 70)); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Golden</span>
                   <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
                 </button>
+
+                <button class="theme-option" data-theme="cyan" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, oklch(0.75 0.14 195), oklch(0.6 0.16 240)); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Cyan</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="purple" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, oklch(0.7 0.2 290), oklch(0.6 0.22 280)); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Purple</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="rose" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, oklch(0.7 0.18 20), oklch(0.65 0.2 350)); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Rose</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <!-- ── INDUSTRY ── -->
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-foreground); padding: 0.5rem 0.5rem 0.1rem; opacity: 0.6;">Industry</div>
+
+                <button class="theme-option" data-theme="firebase" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #ff9a00, #ff6d00); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Firebase</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="github" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #8b5cf6, #6d28d9); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">GitHub</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="stripe" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #a855f7, #7c3aed); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Stripe</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="vscode" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #2d9cdb, #0077c2); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">VS Code</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="google" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #ea4335, #c5221f); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Google</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="mongodb" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #00ed64, #00834d); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">MongoDB</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="figma" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #ff4fa0, #e0367a); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Figma</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="aws" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #ff9900, #d67700); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">AWS</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
+                <button class="theme-option" data-theme="vercel" style="display: flex; align-items: center; gap: 0.625rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 7px; border: 1px solid transparent; background: transparent; cursor: pointer; transition: all 0.15s ease;">
+                  <div style="height: 18px; width: 18px; border-radius: 50%; border: 2px solid var(--border); background: linear-gradient(135deg, #64748b, #334155); flex-shrink:0;"></div>
+                  <span style="flex: 1; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground);">Vercel</span>
+                  <div class="theme-active-dot" style="height: 6px; width: 6px; border-radius: 9999px; background: var(--primary); display: none;"></div>
+                </button>
+
               </div>
             </div>
+
           </div>
 
           <!-- Dark/Light Toggle -->
