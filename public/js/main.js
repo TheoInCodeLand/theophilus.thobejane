@@ -107,11 +107,11 @@ function initThemeToggle() {
   const themePickerBtn = document.getElementById('themePickerBtn');
   const themeDropdown = document.getElementById('themeDropdown');
   const themeDropdownBackdrop = document.getElementById('themeDropdownBackdrop');
-  
+
   // Initialize state
   let currentColorTheme = localStorage.getItem('color-theme') || 'emerald';
-  let isDarkMode = localStorage.getItem('theme-mode') === 'dark' || 
-                   (!localStorage.getItem('theme-mode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  let isDarkMode = localStorage.getItem('theme-mode') === 'dark' ||
+    (!localStorage.getItem('theme-mode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   // Apply initial theme
   if (isDarkMode) {
@@ -156,11 +156,11 @@ function initThemeToggle() {
         currentColorTheme = themeName;
         localStorage.setItem('color-theme', themeName);
         applyColorTheme(themeName);
-        
+
         // Update active state in dropdown
         document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
         option.classList.add('active');
-        
+
         // Close dropdown
         themeDropdown.classList.remove('open');
         if (themeDropdownBackdrop) themeDropdownBackdrop.classList.remove('open');
@@ -182,7 +182,7 @@ function applyColorTheme(themeName) {
 function updateThemeIcons(isDark) {
   const sunIcon = document.querySelector('.sun-icon');
   const moonIcon = document.querySelector('.moon-icon');
-  
+
   if (sunIcon && moonIcon) {
     sunIcon.style.display = isDark ? 'none' : 'block';
     moonIcon.style.display = isDark ? 'block' : 'none';
@@ -192,9 +192,9 @@ function updateThemeIcons(isDark) {
 // TYPING ANIMATION
 // ============================================
 function initTypingAnimation() {
-  const roles = ["Software Dev", "Problem Solver", "Backend Dev", "AI Engineer", "Open Source Enthusiast", "Tech Explorer"];
+  const roles = ["AI Developer", "Full-Stack Engineer", "RAG Architect", "Backend Developer", "Problem Solver", "ICT Graduate (NQF7)"];
   const typingElement = document.getElementById('typingText');
-  
+
   if (!typingElement) return;
 
   let currentRole = 0;
@@ -203,7 +203,7 @@ function initTypingAnimation() {
 
   function typeWriter() {
     const targetText = roles[currentRole];
-    
+
     if (!isDeleting) {
       if (displayText.length < targetText.length) {
         displayText = targetText.slice(0, displayText.length + 1);
@@ -351,12 +351,12 @@ function initChatbot() {
 
           const chunk = decoder.decode(value);
           const lines = chunk.split('\n');
-          
+
           for (const line of lines) {
             if (line.startsWith('data: ')) {
               try {
                 const data = JSON.parse(line.slice(6));
-                
+
                 if (data.content) {
                   assistantMessage += data.content;
                   if (!messageEl) {
@@ -365,12 +365,12 @@ function initChatbot() {
                     updateMessage(messageEl, assistantMessage);
                   }
                 }
-                
+
                 if (data.session_id) {
                   sessionId = data.session_id;
                   localStorage.setItem('chatbot_session_id', sessionId);
                 }
-                
+
                 if (data.sources && messageEl) {
                   addSources(messageEl, data.sources);
                 }
@@ -379,11 +379,11 @@ function initChatbot() {
               }
             }
           }
-          
+
           read();
         });
       }
-      
+
       read();
     }).catch(err => {
       console.error('Chat error:', err);
@@ -397,20 +397,20 @@ function initChatbot() {
   function addMessage(role, content, isStreaming = false) {
     const div = document.createElement('div');
     div.className = `chatbot-message ${role}`;
-    
+
     const avatar = document.createElement('div');
     avatar.className = 'chatbot-message-avatar';
     avatar.textContent = role === 'user' ? 'You' : 'T';
-    
+
     const contentDiv = document.createElement('div');
     contentDiv.className = 'chatbot-message-content';
     contentDiv.innerHTML = formatMessage(content);
-    
+
     div.appendChild(avatar);
     div.appendChild(contentDiv);
     messages.appendChild(div);
     messages.scrollTop = messages.scrollHeight;
-    
+
     return contentDiv;
   }
 
@@ -421,7 +421,7 @@ function initChatbot() {
 
   function addSources(element, sources) {
     if (!sources || sources.length === 0) return;
-    
+
     const sourcesDiv = document.createElement('div');
     sourcesDiv.className = 'chatbot-sources';
     sourcesDiv.innerHTML = `<strong>Sources:</strong> ${sources.join(', ')}`;
@@ -811,7 +811,7 @@ function initNewsletter() {
 // ============================================
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
 
       if (targetId === '#') return;
@@ -851,7 +851,7 @@ function debounce(func, wait) {
 
 function throttle(func, limit) {
   let inThrottle;
-  return function(...args) {
+  return function (...args) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
@@ -992,7 +992,7 @@ document.addEventListener('keydown', (e) => {
 // ============================================
 function initSkillBars() {
   const skillItems = document.querySelectorAll('.skill-item');
-  
+
   if (skillItems.length === 0) return;
 
   const observer = new IntersectionObserver((entries) => {
@@ -1021,7 +1021,7 @@ function initSkillBars() {
 // ============================================
 function initMetricsCounter() {
   const metricCards = document.querySelectorAll('.metric-card');
-  
+
   if (metricCards.length === 0) return;
 
   const observer = new IntersectionObserver((entries) => {
@@ -1029,12 +1029,12 @@ function initMetricsCounter() {
       if (entry.isIntersecting) {
         const valueEl = entry.target.querySelector('.metric-value');
         const target = parseInt(valueEl.dataset.target);
-        
+
         if (target && !entry.target.classList.contains('counted')) {
           animateCounter(valueEl, target);
           entry.target.classList.add('counted');
         }
-        
+
         observer.unobserve(entry.target);
       }
     });
@@ -1053,11 +1053,11 @@ function animateCounter(element, target) {
   function update(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    
+
     // Easing function (ease-out-expo)
     const easeOut = 1 - Math.pow(2, -10 * progress);
     const current = Math.floor(start + (target - start) * easeOut);
-    
+
     element.textContent = current;
 
     if (progress < 1) {
@@ -1079,10 +1079,10 @@ function initContactForm() {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const submitBtn = form.querySelector('.terminal-submit');
     const originalText = submitBtn.innerHTML;
-    
+
     // Show loading state
     submitBtn.innerHTML = '<span>Sending...</span>';
     submitBtn.disabled = true;
@@ -1090,7 +1090,7 @@ function initContactForm() {
     // Simulate form submission (replace with actual endpoint)
     try {
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       // Success state
       form.classList.add('success');
       submitBtn.innerHTML = `
@@ -1099,7 +1099,7 @@ function initContactForm() {
         </svg>
         <span>Message Sent!</span>
       `;
-      
+
       // Reset form
       setTimeout(() => {
         form.reset();
@@ -1107,7 +1107,7 @@ function initContactForm() {
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
       }, 3000);
-      
+
     } catch (error) {
       submitBtn.innerHTML = '<span>Error!</span>';
       setTimeout(() => {
@@ -1134,7 +1134,7 @@ function initContactForm() {
 // ============================================
 function initTimelineAnimation() {
   const timelineItems = document.querySelectorAll('.timeline-item');
-  
+
   if (timelineItems.length === 0) return;
 
   const observer = new IntersectionObserver((entries) => {
@@ -1164,25 +1164,25 @@ function initTimelineAnimation() {
 // Override existing smooth scroll to handle new sections
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
-      
+
       if (targetId === '#') return;
-      
+
       const targetElement = document.querySelector(targetId);
-      
+
       if (targetElement) {
         e.preventDefault();
-        
+
         const headerOffset = 80;
         const elementPosition = targetElement.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-        
+
         window.scrollTo({
           top: offsetPosition,
           behavior: 'smooth'
         });
-        
+
         // Update URL without jumping
         history.pushState(null, null, targetId);
       }
@@ -1197,7 +1197,7 @@ function initHeaderScroll() {
   const header = document.getElementById('header');
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-  
+
   if (!header) return;
 
   let lastScroll = 0;
@@ -1244,11 +1244,11 @@ function showToast(message, type = 'success') {
   toast.innerHTML = `
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       ${type === 'success'
-        ? '<path d="M20 6L9 17l-5-5"/>'
-        : type === 'error'
+      ? '<path d="M20 6L9 17l-5-5"/>'
+      : type === 'error'
         ? '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>'
         : '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'
-      }
+    }
     </svg>
     <span>${message}</span>
   `;
